@@ -1,0 +1,1 @@
+xvfb-run -a --server-args=-screen\ 0\ 1680x1050x24 om-tests -c runone -t 144_notification_demandeur_mail.robot

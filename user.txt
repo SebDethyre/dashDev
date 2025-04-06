@@ -1,0 +1,4 @@
+user_name:sdethyre
+user_path:/home/sdethyre/sandbox/
+extranet_pwd:Spdrmns65,
+jenkins_pwd:mIeLvWHXVJjwfqp2

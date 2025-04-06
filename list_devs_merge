@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Exécuter la commande et filtrer les résultats
+results=$(ls ~/public_html/$1)
+echo $1
+# Créer un tableau pour stocker les résultats modifiés
+modified_results=()
+
+# Parcourir les résultats et les modifier selon les conditions spécifiées
+for line in $results; do
+  if [[ $line =~ ^([0-9]+|rg|refonte-graphique|trunk|support|10456|evo|fix|vdm).* && $line != *".bak" ]]; then
+    modified_results+=("$line")
+  fi
+done
+
+# Enregistrer les résultats modifiés dans un fichier
+output_file="/home/sdethyre/sandbox/dash_dev_boisson/results.txt"
+# rm -f "$output_file"  # Supprimer le fichier s'il existe déjà
+
+for result in "${modified_results[@]}"; do
+  echo "$result" >> "$output_file"
+done

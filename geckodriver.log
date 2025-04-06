@@ -1,0 +1,215 @@
+1688820548204	geckodriver	INFO	Listening on 127.0.0.1:36063
+1688820548736	mozrunner::runner	INFO	Running command: "/snap/firefox/current/firefox.launcher" "--marionette" "--remote-debugging-port" "33955" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileVYEKVF"
+Gtk-Message: 14:49:08.754: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1688820549190	Marionette	INFO	Marionette enabled
+ATTENTION: default value of option mesa_glthread overridden by environment.
+amdgpu: os_same_file_description couldn't determine if two DRM fds reference the same file description.
+If they do, bad things may happen!
+1688820549282	Marionette	INFO	Listening on port 39039
+WebDriver BiDi listening on ws://127.0.0.1:33955
+Read port: 39039
+1688820549408	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:33955/devtools/browser/08d976fa-2ecd-4f6e-bb1f-4abb39b63af9
+JavaScript warning: https://dev.atreal.fr/portal_javascripts/Polaris%20Theme/resourcejquery-1.3.2.min-cachekey4281.js, line 12: unreachable code after return statement
+1688820556535	Marionette	INFO	Stopped listening on port 39039
+1688820655831	geckodriver	INFO	Listening on 127.0.0.1:49725
+1688820656155	mozrunner::runner	INFO	Running command: "/snap/firefox/current/firefox.launcher" "--marionette" "--remote-debugging-port" "32977" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileIpNv3Z"
+Gtk-Message: 14:50:56.173: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1688820656548	Marionette	INFO	Marionette enabled
+ATTENTION: default value of option mesa_glthread overridden by environment.
+amdgpu: os_same_file_description couldn't determine if two DRM fds reference the same file description.
+If they do, bad things may happen!
+1688820656642	Marionette	INFO	Listening on port 36861
+WebDriver BiDi listening on ws://127.0.0.1:32977
+Read port: 36861
+1688820656733	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:32977/devtools/browser/2dbd7b03-4c92-4f0f-b7e5-488e06662d7c
+JavaScript warning: https://dev.atreal.fr/portal_javascripts/Polaris%20Theme/resourcejquery-1.3.2.min-cachekey4281.js, line 12: unreachable code after return statement
+1688820660275	Marionette	INFO	Stopped listening on port 36861
+1705786440271	geckodriver	INFO	Listening on 127.0.0.1:37151
+1705786440453	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/sna ... te" "--remote-debugging-port" "47357" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileZXnBRe"
+Gtk-Message: 22:34:00.474: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1705786441107	Marionette	INFO	Marionette enabled
+1705786441159	Marionette	INFO	Listening on port 41471
+WebDriver BiDi listening on ws://127.0.0.1:47357
+Read port: 41471
+1705786441440	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:47357/devtools/browser/e1a22371-9491-4dd2-a3f5-7c1f798eaeb9
+1705786442591	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.error: "update.locale" " file doesn't exist in either the application or GRE directories"
+1705786473073	addons.xpi	ERROR	System addon update list error SyntaxError: XMLHttpRequest.open: 'http://%(server)s/dummy-system-addons.xml' is not a valid URL.
+1705786479562	geckodriver	INFO	Listening on 127.0.0.1:36589
+1705786479798	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/sna ... te" "--remote-debugging-port" "59123" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilefuhrgF"
+Gtk-Message: 22:34:39.818: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1705786480419	Marionette	INFO	Marionette enabled
+1705786480473	Marionette	INFO	Listening on port 38903
+WebDriver BiDi listening on ws://127.0.0.1:59123
+Read port: 38903
+1705786480748	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:59123/devtools/browser/df3927c1-f42c-4b4e-83de-8e7601d63a75
+1705786481926	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+1705786502757	Marionette	INFO	Stopped listening on port 38903
+[GFX1-]: Wayland protocol error: warning: queue 7fa2c507d610 destroyed while proxies still attached:
+
+[GFX1-]: Wayland protocol error:   wl_display@1 still attached
+
+1705786503196	Marionette	INFO	Stopped listening on port 41471
+[GFX1-]: Wayland protocol error: warning: queue 7fc98327c100 destroyed while proxies still attached:
+
+[GFX1-]: Wayland protocol error:   wl_display@1 still attached
+
+1705786537062	geckodriver	INFO	Listening on 127.0.0.1:49059
+1705786537302	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/sna ... te" "--remote-debugging-port" "38383" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileXdxkyM"
+Gtk-Message: 22:35:37.322: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1705786537918	Marionette	INFO	Marionette enabled
+1705786537970	Marionette	INFO	Listening on port 42397
+WebDriver BiDi listening on ws://127.0.0.1:38383
+Read port: 42397
+1705786538243	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:38383/devtools/browser/d87178bf-3467-46d1-a95d-68d421401143
+1705786539389	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.error: "update.locale" " file doesn't exist in either the application or GRE directories"
+1705786567924	addons.xpi	ERROR	System addon update list error SyntaxError: XMLHttpRequest.open: 'http://%(server)s/dummy-system-addons.xml' is not a valid URL.
+1705787092040	geckodriver	INFO	Listening on 127.0.0.1:40233
+1705787092268	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/sna ... te" "--remote-debugging-port" "34839" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilemjMQPs"
+Gtk-Message: 22:44:52.288: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1705787092889	Marionette	INFO	Marionette enabled
+1705787092993	Marionette	INFO	Listening on port 46483
+WebDriver BiDi listening on ws://127.0.0.1:34839
+Read port: 46483
+1705787093221	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:34839/devtools/browser/e367887f-7543-4c65-bd2a-6e07254b27e5
+1705787094474	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.error: "update.locale" " file doesn't exist in either the application or GRE directories"
+1705787123398	addons.xpi	ERROR	System addon update list error SyntaxError: XMLHttpRequest.open: 'http://%(server)s/dummy-system-addons.xml' is not a valid URL.
+1705787151071	geckodriver	INFO	Listening on 127.0.0.1:44943
+1705787151301	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/sna ... te" "--remote-debugging-port" "60977" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile9JDRHd"
+Gtk-Message: 22:45:51.321: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1705787151910	Marionette	INFO	Marionette enabled
+1705787151963	Marionette	INFO	Listening on port 45685
+WebDriver BiDi listening on ws://127.0.0.1:60977
+Read port: 45685
+1705787152227	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:60977/devtools/browser/f5b77acc-4d57-492b-a7ee-18f33a8fa598
+1705787153393	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.error: "update.locale" " file doesn't exist in either the application or GRE directories"
+1705787182271	addons.xpi	ERROR	System addon update list error SyntaxError: XMLHttpRequest.open: 'http://%(server)s/dummy-system-addons.xml' is not a valid URL.
+1705787233387	geckodriver	INFO	Listening on 127.0.0.1:53329
+1705787233632	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/sna ... te" "--remote-debugging-port" "53335" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile4wHH9B"
+Gtk-Message: 22:47:13.652: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1705787234247	Marionette	INFO	Marionette enabled
+1705787234299	Marionette	INFO	Listening on port 38481
+WebDriver BiDi listening on ws://127.0.0.1:53335
+Read port: 38481
+1705787234544	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:53335/devtools/browser/49e7e477-e7dd-4ca4-8fb2-2b945f9dc438
+1705787236789	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+1705787256807	Marionette	INFO	Stopped listening on port 38481
+[GFX1-]: Wayland protocol error: warning: queue 7f251fe7c520 destroyed while proxies still attached:
+
+[GFX1-]: Wayland protocol error:   wl_display@1 still attached
+
+1705787259471	Marionette	INFO	Stopped listening on port 45685
+[GFX1-]: Wayland protocol error: warning: queue 7fdff047e3a0 destroyed while proxies still attached:
+
+[GFX1-]: Wayland protocol error:   wl_display@1 still attached
+
+1705787261102	Marionette	INFO	Stopped listening on port 46483
+[GFX1-]: Wayland protocol error: warning: queue 7fd121d935b0 destroyed while proxies still attached:
+
+[GFX1-]: Wayland protocol error:   wl_display@1 still attached
+
+1705787264862	Marionette	INFO	Stopped listening on port 42397
+[GFX1-]: Wayland protocol error: warning: queue 7f1ac297d1c0 destroyed while proxies still attached:
+
+[GFX1-]: Wayland protocol error:   wl_display@1 still attached
+
+1705787290317	geckodriver	INFO	Listening on 127.0.0.1:60265
+1705787290558	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/sna ... te" "--remote-debugging-port" "57047" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilesMjQKQ"
+Gtk-Message: 22:48:10.578: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1705787291176	Marionette	INFO	Marionette enabled
+1705787291229	Marionette	INFO	Listening on port 42161
+WebDriver BiDi listening on ws://127.0.0.1:57047
+Read port: 42161
+1705787291494	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:57047/devtools/browser/18887211-2c9b-49d0-bf15-034491713637
+1705787292633	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://ci1.atreal.fr."
+1705787318854	Marionette	INFO	Stopped listening on port 42161
+[GFX1-]: Wayland protocol error: warning: queue 7f377117c160 destroyed while proxies still attached:
+
+[GFX1-]: Wayland protocol error:   wl_display@1 still attached
+
+2024/02/10 16:52:18.197435 cmd_run.go:1055: WARNING: cannot start document portal: dbus: authentication failed
+/user.slice/user-1001.slice/user@1001.service/app.slice/app-org.gnome.Terminal.slice/vte-spawn-363d3af9-9662-4c3c-bcb5-c384533f0382.scope is not a snap cgroup
+1710197689129	geckodriver	INFO	Listening on 127.0.0.1:47887
+1710197689422	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/sna ... te" "--remote-debugging-port" "49291" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileg4Z6Px"
+Gtk-Message: 23:54:49.454: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1710197690290	Marionette	INFO	Marionette enabled
+1710197690401	Marionette	INFO	Listening on port 39127
+WebDriver BiDi listening on ws://127.0.0.1:49291
+Read port: 39127
+1710197690691	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:49291/devtools/browser/ba9ffdf9-8084-47ac-90d0-ceb378e8b6ef
+JavaScript warning: https://dev.atreal.fr/portal_javascripts/Polaris%20Theme/resourcejquery-1.3.2.min-cachekey4281.js, line 12: unreachable code after return statement
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://dev.atreal.fr."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://dev.atreal.fr."
+1710197696887	Marionette	INFO	Stopped listening on port 39127
+1710197723804	geckodriver	INFO	Listening on 127.0.0.1:55029
+1710197724084	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/sna ... te" "--remote-debugging-port" "35241" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileJNlz2t"
+Gtk-Message: 23:55:24.115: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1710197724879	Marionette	INFO	Marionette enabled
+1710197724957	Marionette	INFO	Listening on port 35131
+Read port: 35131
+WebDriver BiDi listening on ws://127.0.0.1:35241
+1710197725208	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.error: ({})
+DevTools listening on ws://127.0.0.1:35241/devtools/browser/1fbf6b96-5f16-442a-ba99-1caf2143be7b
+1710197727874	Marionette	INFO	Stopped listening on port 35131

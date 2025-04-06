@@ -1,0 +1,1468 @@
+2 colonnes pour la liste :
+
+
+/* * /
+int main(int argc, char *argv[])
+{
+    char command[256];
+    sprintf(command, "bash /home/sdethyre/sandbox/dash_dev_boisson/list_devs");
+    int exit_status = system(command);
+
+    if (exit_status == -1)
+    {
+        // Erreur lors de l'exécution du script
+        return 1;
+    }
+    else if (!WIFEXITED(exit_status) || WEXITSTATUS(exit_status) != 0)
+    {
+        // Le script s'est terminé avec une erreur
+        return 1;
+    }
+
+    // Initialiser GTK
+    gtk_init(&argc, &argv);
+
+    // Créer la fenêtre principale
+    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Devs    🔧");
+    gtk_window_set_default_size(GTK_WINDOW(window), 300, 200);
+    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
+    g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+    // Positionner la fenêtre à 200 pixels du haut de l'écran
+    gtk_window_move(GTK_WINDOW(window), 800, 300);
+
+    // Créer le modèle de données pour la liste avec 2 colonnes : colonne vide et titre
+    GtkListStore *list_store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
+
+    // Ouvrir le fichier "results.txt"
+    char file_path[256];
+    sprintf(file_path, "/home/sdethyre/sandbox/dash_dev_boisson/results.txt");
+    FILE *file = fopen(file_path, "r");
+    if (file)
+    {
+        char line[256];
+        while (fgets(line, sizeof(line), file))
+        {
+            // Suppression du saut de ligne à la fin de la ligne
+            line[strcspn(line, "\n")] = '\0';
+            // Vérifier que la ligne ne se termine pas par ".bak"
+            gboolean is_valid_line = !g_str_has_suffix(line, ".bak");
+
+            if ((g_str_has_prefix(line, "5") || g_str_has_prefix(line, "6")) && is_valid_line)
+            {
+                gchar *escamoted_line = escamote_line(line, "develop");
+                GtkTreeIter iter;
+                // Ajouter une nouvelle ligne à la liste GtkListStore
+                gtk_list_store_append(list_store, &iter);
+                // Définir les valeurs des colonnes de la nouvelle ligne
+                gtk_list_store_set(list_store, &iter, 0, "📎", 1, escamoted_line, -1);
+                g_free(escamoted_line);
+            }
+            else if (g_str_has_prefix(line, "refonte-graphique") && is_valid_line)
+            {
+                gchar *escamoted_line = escamote_line(line, "");
+                gchar *title = "refonte-graphique";
+                GtkTreeIter iter;
+                gtk_list_store_append(list_store, &iter);
+                gtk_list_store_set(list_store, &iter, 0, "", 1, title, -1);
+                g_free(escamoted_line);
+            }
+            else if (g_str_has_prefix(line, "rg-") && is_valid_line)
+            {
+                // Appel de la fonction escamote_line pour modifier la ligne
+                gchar *escamoted_line = escamote_line(line, "rg");
+                gchar *indented_line = g_strdup_printf("        %s", escamoted_line);
+                GtkTreeIter iter;
+                gtk_list_store_append(list_store, &iter);
+                gtk_list_store_set(list_store, &iter, 0, "🎨", 1, indented_line, -1);
+                g_free(escamoted_line);
+                g_free(indented_line);
+            }
+        }
+        // Fermer le fichier
+        fclose(file);
+    }
+
+    // Créer le GtkTreeView à partir du modèle de données
+    GtkWidget *treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_store));
+    g_object_unref(list_store);
+
+    // Créer une colonne pour afficher la colonne vide décorative
+    GtkCellRenderer *renderer_column = gtk_cell_renderer_text_new();
+    GtkTreeViewColumn *column_empty = gtk_tree_view_column_new_with_attributes("Colonne Décorative", renderer_column, "text", 0, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column_empty);
+
+    // Créer une colonne pour afficher le titre
+    GtkCellRenderer *renderer_title = gtk_cell_renderer_text_new();
+    GtkTreeViewColumn *column_title = gtk_tree_view_column_new_with_attributes("Titre", renderer_title, "text", 1, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column_title);
+
+    // Définir la taille du GtkTreeView
+    GtkRequisition requisition;
+    gtk_widget_get_preferred_size(treeview, &requisition, NULL);
+    requisition.width = 200; // Modifier la largeur souhaitée
+    gtk_widget_set_size_request(treeview, requisition.width, requisition.height);
+
+    // Créer la sélection pour le GtkTreeView
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+    gtk_tree_selection_set_mode(selection, GTK_SELECTION_SINGLE);
+    // Connecter l'événement de sélection au callback "open_file"
+    g_signal_connect(G_OBJECT(treeview), "row-activated", G_CALLBACK(open_file), combobox);
+
+    // Connecter l'événement de pression des touches du clavier au callback "on_treeview_key_press"
+    g_signal_connect(G_OBJECT(treeview), "key-press-event", G_CALLBACK(on_treeview_key_press), NULL);
+
+    // Créer le conteneur vertical (vbox)
+    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+
+    // Créer le GtkComboBox avec les valeurs prédéfinies et un champ d'entrée
+    const gchar *combo_values[] = {"admin", "instr", "instrpoly", "admingen", "agmingenmars", "guichet", "guichetsuivi", "assist", "oaamb"};
+    const int num_versions = sizeof(combo_values) / sizeof(combo_values[0]);
+    combobox = gtk_combo_box_text_new_with_entry();
+    for (int i = 0; i < num_versions; i++)
+    {
+        gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), combo_values[i]);
+    }
+    gtk_combo_box_set_entry_text_column(GTK_COMBO_BOX(combobox), 0);
+    gtk_widget_set_tooltip_text(combobox, "Utilisateur de l'application (admin par défaut)");
+
+    // Ajouter le GtkComboBox et le GtkTreeView au vbox
+    gtk_container_add(GTK_CONTAINER(vbox), treeview);
+
+    // Création de l'espace visuel entre la grille et le bouton
+    GtkWidget *separator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+    gtk_widget_set_hexpand(separator, TRUE);
+    gtk_container_add(GTK_CONTAINER(vbox), separator);
+
+    gtk_container_add(GTK_CONTAINER(vbox), GTK_WIDGET(combobox));
+
+    // Création du conteneur GtkBox pour centrer le grid
+    GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
+    gtk_box_pack_start(GTK_BOX(vbox), box, TRUE, TRUE, 0);
+
+    // Création de la grille
+    GtkWidget *grid = gtk_grid_new();
+    gtk_widget_set_margin_top(grid, 10);
+    gtk_grid_set_row_spacing(GTK_GRID(grid), 10);
+    gtk_grid_set_column_spacing(GTK_GRID(grid), 10);
+    gtk_container_add(GTK_CONTAINER(box), grid);
+
+    // Création et ajout des checkboxes dans la grille
+    check_vs = gtk_check_button_new_with_label("VsCode");
+    gtk_grid_attach(GTK_GRID(grid), check_vs, 0, 0, 1, 1);
+    check_ti = gtk_check_button_new_with_label("Ticket Interne");
+    gtk_grid_attach(GTK_GRID(grid), check_ti, 1, 0, 1, 1);
+    check_job = gtk_check_button_new_with_label("Job Jenkins");
+    gtk_grid_attach(GTK_GRID(grid), check_job, 0, 1, 1, 1);
+    check_app = gtk_check_button_new_with_label("Application");
+    gtk_grid_attach(GTK_GRID(grid), check_app, 1, 1, 1, 1);
+
+    // Création de l'espace visuel entre la grille et le bouton
+    GtkWidget *separator_2 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+    gtk_widget_set_hexpand(separator_2, TRUE);
+    gtk_container_add(GTK_CONTAINER(vbox), separator_2);
+
+    GtkWidget *button = gtk_button_new_with_label("Ouvrir");
+    gtk_container_add(GTK_CONTAINER(vbox), button);
+    g_signal_connect(button, "clicked", G_CALLBACK(launch), treeview);
+
+    gtk_container_add(GTK_CONTAINER(window), vbox);
+    gtk_widget_show_all(window);
+
+    gtk_main();
+
+    return 0;
+}
+
+/* */
+
+
+
+
+
+
+
+case GDK_KEY_Left:
+        {
+            GtkTreePath *path;
+            gtk_tree_view_get_cursor(treeview, &path, NULL);
+            // if (path) {
+            //     gint *indices = gtk_tree_path_get_indices(path);
+            //     gint selected_row_index = indices[0];
+            //     gtk_tree_path_free(path);
+
+            //     // Si la ligne sélectionnée est valide, créer et afficher le menu de droite
+            //     if (selected_row_index >= 0) {
+            //         if (right_menu != NULL) {
+            //             gtk_widget_destroy(right_menu);
+            //             right_menu = NULL;
+            //         }
+
+                    right_menu = gtk_menu_new();
+                    for (int i = 0; i < num_options_R; i++) {
+                        GtkWidget *menu_item = gtk_menu_item_new_with_label(array_du_select_R[i]);
+
+                        // Créer et peupler la structure de données personnalisée
+                        MenuItemData *data = g_new(MenuItemData, 1);
+                        data->index = i;
+                        data->treeview = treeview;
+
+                        // Connecter le signal "activate" et passer la structure de données personnalisée en tant que user_data
+                        g_signal_connect(menu_item, "activate", G_CALLBACK(on_menu_item_activate_R), data);
+                        gtk_menu_shell_append(GTK_MENU_SHELL(right_menu), menu_item);
+                    }
+
+                    // Afficher le menu de droite
+                    gtk_widget_show_all(right_menu);
+                    // // Obtenir le nombre de colonnes dans le treeview
+                    // int num_columns = gtk_tree_view_get_n_columns(treeview);
+                    // // Obtenir la cellule la plus à droite de la ligne sélectionnée
+                    // GtkTreeViewColumn *column = gtk_tree_view_get_column(treeview, num_columns - 1);
+                    // GtkTreePath *cell_path = gtk_tree_path_new_from_indices(selected_row_index, -1);
+                    // GdkRectangle cell_rect;
+                    // gtk_tree_view_get_cell_area(treeview, cell_path, column, &cell_rect);
+                    // gtk_tree_path_free(cell_path);
+                    // // Convertir le rectangle de la cellule en coordonnées du widget
+                    // gint x, y;
+                    // gtk_tree_view_convert_bin_window_to_widget_coords(treeview, cell_rect.x + cell_rect.width, cell_rect.y, &x, &y);
+                    // Positionner le menu de droite à gauche du widget cible
+                    gtk_menu_popup_at_widget(GTK_MENU(right_menu), GTK_WIDGET(gtk_widget_get_toplevel(GTK_WIDGET(treeview))), GDK_GRAVITY_WEST, GDK_GRAVITY_EAST, NULL);
+                    // g_signal_connect(G_OBJECT(treeview), "button-press-event", G_CALLBACK(on_treeview_button_press), right_menu);
+            //     }
+            // }
+            break;
+        }
+
+
+
+
+// Fonction pour récupérer l'indice d'une chaîne dans une liste GtkListStore
+int find_string_index(GtkTreeView *treeview, const gchar *search_string) {
+    GtkTreeModel *model = gtk_tree_view_get_model(treeview);
+    GtkTreeIter iter;
+    gboolean valid;
+    gchar *full_text;
+    int index = 0;
+
+    valid = gtk_tree_model_get_iter_first(model, &iter);
+    while (valid) {
+        gtk_tree_model_get(model, &iter, 1, &full_text, -1);
+        if (full_text != NULL) {
+            if (!g_str_has_suffix(full_text, ".bak") && g_strcmp0(full_text, search_string) == 0) {
+                g_free(full_text);
+                return index; // Renvoie l'indice de la première occurrence de la chaîne
+            }
+            g_free(full_text);
+            index++;
+        }
+        // Passer à l'itérateur suivant
+        valid = gtk_tree_model_iter_next(model, &iter);
+    }
+    return -1; // La chaîne n'a pas été trouvée dans la liste
+}
+
+
+
+
+
+
+
+
+    // 3 * 2
+    //     // Créer une étiquette pour le titre
+    // GtkWidget *label1 = gtk_label_new("< : Appli");
+    // GtkWidget *label2 = gtk_label_new("⏎ : VsCode");
+    // GtkWidget *label3 = gtk_label_new("Ctrl D : Test");
+    // GtkWidget *label4 = gtk_label_new("x : Quitter");
+    // GtkWidget *label5 = gtk_label_new("Label 5");
+    // GtkWidget *label6 = gtk_label_new("Label 6");
+
+    // // Créer un conteneur de grille pour organiser les étiquettes en 3 colonnes
+    // GtkWidget *labels_grid = gtk_grid_new();
+    // gtk_grid_set_column_homogeneous(GTK_GRID(labels_grid), TRUE); // Répartir l'espace également entre les colonnes
+
+    // // Ajouter les étiquettes à la grille
+    // gtk_grid_attach(GTK_GRID(labels_grid), label1, 0, 0, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label2, 1, 0, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label3, 2, 0, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label4, 0, 1, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label5, 1, 1, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label6, 2, 1, 1, 1);
+
+    // // Ajouter la grille au début du vbox
+    // gtk_box_pack_start(GTK_BOX(vbox), labels_grid, FALSE, FALSE, 10);
+
+
+
+
+
+
+
+    // 3 * 4
+    //     // Créer les étiquettes
+    // GtkWidget *label1 = gtk_label_new("Label 1");
+    // GtkWidget *label2 = gtk_label_new("Label 2");
+    // GtkWidget *label3 = gtk_label_new("Label 3");
+    // GtkWidget *label4 = gtk_label_new("Label 4");
+    // GtkWidget *label5 = gtk_label_new("Label 5");
+    // GtkWidget *label6 = gtk_label_new("Label 6");
+    // GtkWidget *label7 = gtk_label_new("Label 7");
+    // GtkWidget *label8 = gtk_label_new("Label 8");
+    // GtkWidget *label9 = gtk_label_new("Label 9");
+    // GtkWidget *label10 = gtk_label_new("Label 10");
+    // GtkWidget *label11 = gtk_label_new("Label 11");
+    // GtkWidget *label12 = gtk_label_new("Label 12");
+
+    // // Créer un conteneur de grille pour organiser les étiquettes en 4x3
+    // GtkWidget *labels_grid = gtk_grid_new();
+    // gtk_grid_set_column_homogeneous(GTK_GRID(labels_grid), TRUE); // Répartir l'espace également entre les colonnes
+
+    // // Ajouter les étiquettes à la grille
+    // gtk_grid_attach(GTK_GRID(labels_grid), label1, 0, 0, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label2, 1, 0, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label3, 2, 0, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label4, 3, 0, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label5, 0, 1, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label6, 1, 1, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label7, 2, 1, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label8, 3, 1, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label9, 0, 2, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label10, 1, 2, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label11, 2, 2, 1, 1);
+    // gtk_grid_attach(GTK_GRID(labels_grid), label12, 3, 2, 1, 1);
+
+    // // Ajouter la grille au début du vbox
+    // gtk_box_pack_start(GTK_BOX(vbox), labels_grid, FALSE, FALSE, 10); 
+
+
+
+
+
+g_signal_handler_disconnect(treeview, key_press_handler_id);
+            // if (left_menu) {
+            //     gtk_menu_popdown(GTK_MENU(left_menu));
+            //     gtk_widget_destroy(left_menu);
+            //     left_menu = NULL;
+            // }
+            GtkTreePath *path;
+            gtk_tree_view_get_cursor(treeview, &path, NULL);
+            right_menu = gtk_menu_new();
+            g_signal_connect(right_menu, "key-press-event", G_CALLBACK(on_treeview_key_press_right), NULL);
+            for (int i = 0; i < num_options_R; i++) {
+                GtkWidget *menu_item = gtk_menu_item_new_with_label(array_du_select_R[i]);
+                // Créer et peupler la structure de données personnalisée
+                MenuItemData *data = g_new(MenuItemData, 1);
+                data->index = i;
+                data->treeview = treeview;
+                // Connecter le signal "activate" et passer la structure de données personnalisée en tant que user_data
+                g_signal_connect(menu_item, "activate", G_CALLBACK(on_menu_item_activate_R), data);
+                gtk_menu_shell_append(GTK_MENU_SHELL(right_menu), menu_item);
+            }
+            gtk_widget_show_all(right_menu);
+            gtk_menu_popup_at_widget(GTK_MENU(right_menu), GTK_WIDGET(gtk_widget_get_toplevel(GTK_WIDGET(treeview))), GDK_GRAVITY_EAST, GDK_GRAVITY_WEST, NULL);
+            gtk_tree_path_free(path);
+            // g_signal_handler_disconnect(treeview, key_press_handler_id_right);
+
+            key_press_handler_id = g_signal_connect(treeview, "key-press-event", G_CALLBACK(on_treeview_key_press), NULL);
+
+
+
+
+
+int main(int argc, char *argv[]) {
+    FILE *log_file = fopen("/home/sdethyre/sandbox/dash_dev_boisson/debug.log", "a");
+    if (log_file != NULL) {
+        gchar *path_value = getenv("PATH");
+        gchar *path_env = g_strdup_printf("Application started\nPath values :\n%s", path_value);
+        fprintf(log_file, "%s", path_env);
+        fclose(log_file); // Fermeture du fichier de log
+    }
+
+}
+
+
+
+gboolean simulate_escape_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data) {
+    GdkEventKey key_event;
+    key_event.type = GDK_KEY_PRESS;
+    key_event.window = gtk_widget_get_window(widget);
+    key_event.send_event = TRUE;
+    key_event.time = GDK_CURRENT_TIME;
+    key_event.state = 0;
+    key_event.keyval = GDK_KEY_Escape;
+    key_event.length = 0;
+    key_event.string = NULL;
+    key_event.hardware_keycode = 0;
+    key_event.group = 0;
+
+    gtk_widget_event(widget, (GdkEvent *)&key_event);
+
+    return FALSE;
+}
+
+
+
+
+
+void all_element_neon_off(){
+    element_neon_off(GTK_WIDGET(label1));
+    element_neon_off(GTK_WIDGET(label2));
+    element_neon_off(GTK_WIDGET(label3));
+    element_neon_off(GTK_WIDGET(label4));
+    element_neon_off(GTK_WIDGET(label5));
+    element_neon_off(GTK_WIDGET(label6));
+    element_neon_off(GTK_WIDGET(label7));
+    element_neon_off(GTK_WIDGET(label8));
+    element_neon_off(GTK_WIDGET(label9));
+}
+
+
+
+
+
+#include <math.h>
+////////////////// 1
+// double center_x = 0.0;
+// double center_y = 0.0;
+// double radius = 30.0;
+// double angle = 0.0;
+// gboolean draw_callback(GtkWidget *widget, cairo_t *cr, gpointer data) {
+//     // Effacer le dessin précédent
+//     cairo_set_source_rgb(cr, 1.0, 1.0, 1.0);
+//     cairo_paint(cr);
+
+//     // Calculer les coordonnées du point sur le cercle
+//     double circle_x = center_x + radius * cos(angle);
+//     double circle_y = center_y + radius * sin(angle);
+
+//     // Dessiner le cercle
+//     cairo_set_source_rgb(cr, 0.0, 0.0, 1.0); // Couleur bleue
+//     cairo_arc(cr, circle_x, circle_y, 10.0, 0, 2 * G_PI);
+//     cairo_fill(cr);
+
+//     // Mettre à jour l'angle pour la prochaine frame
+//     angle += 0.02;
+
+//     // Demander une nouvelle mise à jour du dessin
+//     gtk_widget_queue_draw(widget);
+
+//     return TRUE;
+// }
+
+
+// gboolean draw_callback(GtkWidget *widget, cairo_t *cr, gpointer data) {
+//     // Effacer le dessin précédent
+//     cairo_set_source_rgb(cr, 1.0, 1.0, 1.0);
+//     cairo_paint(cr);
+
+//     // Calculer les coordonnées du point sur le cercle
+//     double circle_x = center_x + radius * cos(angle);
+//     double circle_y = center_y + radius * sin(angle);
+
+//     // Dessiner le cercle
+//     cairo_set_source_rgb(cr, 0.0, 0.0, 1.0); // Couleur bleue
+//     cairo_arc(cr, circle_x, circle_y, 10.0, 0, 2 * G_PI);
+//     cairo_fill(cr);
+
+//     // Mettre à jour l'angle pour la prochaine frame
+//     angle += 0.02;
+
+//     // Demander une nouvelle mise à jour du dessin
+//     gtk_widget_queue_draw(widget);
+
+//     return TRUE;
+// }
+
+////////////////////// 2
+// double center_x = 0.0;
+// double center_y = 0.0;
+// double max_radius = 30.0;
+// double current_radius = 0.0;
+// gboolean growing = TRUE;
+
+// gboolean draw_callback(GtkWidget *widget, cairo_t *cr, gpointer data) {
+//     // Effacer le dessin précédent
+//     cairo_set_source_rgb(cr, 1.0, 1.0, 1.0);
+//     cairo_paint(cr);
+
+//     // Dessiner le cercle
+//     cairo_set_source_rgb(cr, 0.0, 0.0, 1.0); // Couleur bleue
+//     cairo_arc(cr, center_x, center_y, current_radius, 0, 2 * G_PI);
+//     cairo_fill(cr);
+
+//     // Mettre à jour le rayon du cercle en fonction de la croissance
+//     if (growing) {
+//         current_radius += 1.0;
+//         if (current_radius >= max_radius) {
+//             growing = FALSE;
+//         }
+//     } else {
+//         current_radius -= 1.0;
+//         if (current_radius <= 0.0) {
+//             growing = TRUE;
+//         }
+//     }
+
+//     // Demander une nouvelle mise à jour du dessin
+//     gtk_widget_queue_draw(widget);
+
+//     return TRUE;
+// }
+
+#define WIDTH 400
+#define HEIGHT 300
+#define CIRCLE_RADIUS 50
+#define M_PI 3.14159265358979323846
+gboolean draw_callback(GtkWidget *widget, cairo_t *cr, gpointer data) {
+    // Effacer le dessin précédent
+    cairo_set_source_rgb(cr, 1.0, 1.0, 1.0);
+    cairo_paint(cr);
+
+    // Calculer les coordonnées du centre du cercle
+    double center_x = WIDTH / 2.0;
+    double center_y = HEIGHT / 2.0;
+
+    // Calculer l'angle de l'arc en fonction du temps
+    double time = gtk_get_current_event_time() / 1000.0; // Convertir le temps en secondes
+    double arc_angle = fmod(time, 2 * M_PI); // Angle dans la plage [0, 2π]
+
+    // Dessiner le cercle blanc
+    cairo_set_source_rgb(cr, 1.0, 1.0, 1.0);
+    cairo_arc(cr, center_x, center_y, CIRCLE_RADIUS, 0, 2 * M_PI);
+    cairo_fill(cr);
+
+    // Dessiner l'arc bleu
+    cairo_set_source_rgb(cr, 0.0, 0.0, 1.0); // Couleur bleue
+    cairo_arc(cr, center_x, center_y, CIRCLE_RADIUS, arc_angle - M_PI / 4, arc_angle + M_PI / 4);
+    cairo_line_to(cr, center_x, center_y); // Ligne vers le centre pour fermer l'arc
+    cairo_fill(cr);
+
+    // Demander une nouvelle mise à jour du dessin
+    gtk_widget_queue_draw(widget);
+
+    return FALSE;
+}
+
+
+
+
+MAIN :
+
+    // Créer un widget DrawingArea pour dessiner l'animation
+    GtkWidget *drawing_area = gtk_drawing_area_new();
+    gtk_container_add(GTK_CONTAINER(vbox), drawing_area);
+
+    // Connecter le signal "draw" pour dessiner l'animation
+    g_signal_connect(G_OBJECT(drawing_area), "draw", G_CALLBACK(draw_callback), NULL);
+
+    // Lancer l'animation en appelant "gtk_widget_queue_draw" périodiquement
+    g_timeout_add(50, (GSourceFunc)gtk_widget_queue_draw, drawing_area);
+
+
+
+
+void create_waiter () {
+        // Créer un widget DrawingArea pour dessiner l'animation
+    drawing_area = gtk_drawing_area_new();
+    gtk_container_add(GTK_CONTAINER(vbox), drawing_area);
+    // Connecter le signal "draw" pour dessiner l'animation
+    g_signal_connect(G_OBJECT(drawing_area), "draw", G_CALLBACK(draw_callback), NULL);
+    // Lancer l'animation en appelant "gtk_widget_queue_draw" périodiquement
+    g_timeout_add(50, (GSourceFunc)gtk_widget_queue_draw, drawing_area);
+}
+
+void destroy_waiter () {
+    gtk_widget_destroy(drawing_area);
+}
+
+
+
+
+########## NEONS :
+gboolean neon_blink_timeout_handler(gpointer user_data) {
+    GtkWidget *widget = GTK_WIDGET(user_data);
+    GtkStyleContext *style_context = gtk_widget_get_style_context(widget);
+
+    if (gtk_style_context_has_class(style_context, "neon")) {
+        gtk_style_context_remove_class(style_context, "neon");
+    } else {
+        gtk_style_context_add_class(style_context, "neon");
+    }
+
+    return G_SOURCE_CONTINUE;
+}
+void element_neon_on_blink(GtkWidget *widget) {
+    GtkCssProvider *provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_path(provider, "/home/sdethyre/sandbox/dash_dev_boisson/style.css", NULL);
+
+    GtkStyleContext *context = gtk_widget_get_style_context(widget);
+    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    gtk_style_context_add_class(context, "neon");
+
+    // Activer le clignotement lorsque le néon est activé
+    neon_blink_timeout_id = g_timeout_add(500, (GSourceFunc)neon_blink_timeout_handler, widget);
+}
+
+void element_neon_on_u(GtkWidget *widget, guint interval_ms) {
+    // Ajouter la classe "neon" pour l'effet de néon
+    gtk_style_context_add_class(gtk_widget_get_style_context(widget), "neon");
+
+    // Utiliser un rappel (callback) pour retirer la classe "neon" après un court délai
+    g_timeout_add(interval_ms, (GSourceFunc)remove_neon_class_callback, widget);
+}
+
+###########################################
+
+double center_x = 0.0;
+double center_y = 0.0;
+double max_radius = 30.0;
+double current_radius = 0.0;
+gboolean growing = TRUE;
+
+gboolean draw_callback(GtkWidget *widget, cairo_t *cr, gpointer data) {
+    // Effacer le dessin précédent
+    cairo_set_source_rgb(cr, 220.0 / 255.0, 255.0 / 255.0, 255.0 / 255.0);
+    cairo_paint(cr);
+
+    // Dessiner le cercle
+    cairo_set_source_rgb(cr, 48.0 / 255.0, 130.0 / 255.0, 128.0 / 255.0); // Couleur bleue
+    cairo_arc(cr, center_x, center_y, current_radius, 0, 2 * G_PI);
+    cairo_fill(cr);
+
+    // Mettre à jour le rayon du cercle en fonction de la croissance
+    if (growing) {
+        current_radius += 1.0;
+        if (current_radius >= max_radius) {
+            growing = FALSE;
+        }
+    } else {
+        current_radius -= 1.0;
+        if (current_radius <= 0.0) {
+            growing = TRUE;
+        }
+    }
+    // Demander une nouvelle mise à jour du dessin
+    gtk_widget_queue_draw(widget);
+
+    return TRUE;
+}
+
+###########################################
+
+void update_counter_label(GtkTreeSelection *selection) {
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    // Get the selected row
+    if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+        gchar *filename;
+        gtk_tree_model_get(model, &iter, 1, &filename, -1);
+        gchar directory[256] = "/home/sdethyre/public_html/openads/";
+        gchar file_path[512];
+        snprintf(file_path, sizeof(file_path), "%s%s", directory, filename);
+        // Count modified files using svn status
+        int count = count_modified_files(file_path);
+        // Update the label text with the count
+        gchar *label_text = g_strdup_printf("Modifiés : %d", count);
+        // gtk_label_set_text(GTK_LABEL(counter_label), label_text);
+        g_free(label_text);
+        g_free(filename);
+    }
+}
+
+###########################################
+void connect_signals_on_widget(GtkWidget *widget) { connect_signals(GTK_WIDGET(widget)); }
+###########################################
+gboolean on_treeview_button_press(GtkWidget *widget, GdkEventButton *event, gpointer user_data) {
+    if (event->button == GDK_BUTTON_PRIMARY) { // Clic gauche
+        gtk_widget_hide(GTK_WIDGET(user_data));
+        return TRUE;
+    }
+    return FALSE;
+}
+###########################################
+/* 
+  GtkWidget *label = gtk_label_new("Hello world");
+  gtk_widget_set_name(label, "neon-label");
+
+
+
+
+
+
+
+
+
+#include <gtk/gtk.h>
+
+int main(int argc, char *argv[]) {
+  gtk_init(&argc, &argv);
+
+  // Créer une instance de GtkCssProvider
+  GtkCssProvider *css_provider = gtk_css_provider_new();
+
+  // Charger le fichier CSS externe
+  gtk_css_provider_load_from_file(css_provider, "style.css", NULL);
+
+  // Ajouter le fournisseur de CSS à la liste des fournisseurs de CSS actifs de l'application GTK
+  GtkStyleContext *style_context = gtk_widget_get_style_context(widget);
+  gtk_style_context_add_provider(style_context, GTK_STYLE_PROVIDER(css_provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+  // Créer et afficher une fenêtre GTK
+  GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  gtk_widget_show_all(window);
+
+  gtk_main();
+
+  return 0;
+} */
+
+########################################### Scripts python en C :
+
+void retrieve_processed_data(char *processed_data) {
+    FILE *processed_file = fopen("/home/sdethyre/sandbox/dash_dev_boisson/processed_data.txt", "r");
+    if (processed_file == NULL) {
+        perror("Error opening file");
+        exit(EXIT_FAILURE);
+    }
+
+    // Lire le contenu du fichier de données traitées
+    fread(processed_data, 1, 4096, processed_file);
+    fclose(processed_file);
+}
+
+#include <glib.h>
+
+char** process_tests_lines(char** lines, int num_lines, int* num_processed_lines) {
+    char** processed_lines = (char**)malloc(num_lines * sizeof(char*));
+    *num_processed_lines = 0;
+
+    for (int i = 0; i < num_lines; i++) {
+        char* line = lines[i];
+        if (strstr(line, "Tests") != NULL && strlen(line) >= 6) {
+            line += 6;
+            char* delimiter = strstr(line, "::");
+            if (delimiter != NULL) {
+                *delimiter = '\0';
+            }
+            processed_lines[*num_processed_lines] = strdup(line);
+            (*num_processed_lines)++;
+        }
+    }
+
+    return processed_lines;
+}
+
+gchar* get_last_tests_line_from_file(const gchar* file_path) {
+    FILE* file = fopen(file_path, "r");
+    if (file == NULL) {
+        return g_strdup("Fichier introuvable\n");
+    }
+
+    char** lines = NULL;
+    int num_lines = 0;
+    char buffer[256];
+
+    while (fgets(buffer, sizeof(buffer), file) != NULL) {
+        char* line = strdup(buffer);
+        lines = (char**)realloc(lines, (num_lines + 1) * sizeof(char*));
+        lines[num_lines] = line;
+        num_lines++;
+    }
+
+    fclose(file);
+
+    char* last_tests_line = NULL;
+    for (int i = num_lines - 1; i >= 0; i--) {
+        char* line = lines[i];
+        if (strstr(line, "Tests") != NULL) {
+            last_tests_line = line;
+            break;
+        }
+    }
+
+    if (last_tests_line != NULL) {
+        int num_processed_lines = 0;
+        char** processed_lines = process_tests_lines(&last_tests_line, 1, &num_processed_lines);
+        gchar* result = NULL;
+
+        if (num_processed_lines > 0) {
+            result = g_strdup(processed_lines[0]);
+            for (int i = 0; i < num_processed_lines; i++) {
+                free(processed_lines[i]);
+            }
+            free(processed_lines);
+        } else {
+            result = g_strdup("Aucun résultat\n");
+        }
+
+        for (int i = 0; i < num_lines; i++) {
+            free(lines[i]);
+        }
+        free(lines);
+
+        return g_strchomp(result);
+    } else {
+        for (int i = 0; i < num_lines; i++) {
+            free(lines[i]);
+        }
+        free(lines);
+
+        return g_strdup("Test en préparation\n");
+    }
+}
+
+############ appels :
+    // if (strcmp(script_name, "/home/sdethyre/sandbox/dash_dev_boisson/last_test_d.py") == 0 ) {
+    //     gchar *str = get_last_tests_line_from_file("/home/sdethyre/sandbox/dash_dev_boisson/output.txt");
+    //     printf("out : %s",str);
+    //     if (strcmp(context, "Dernier job incomplet") == 0) {
+    //         gchar *output_label_tmp   = g_strdup("Dernier test : ");
+    //         output_label_left  = gtk_label_new(output_label_tmp);
+    //         gchar *output_label_tmp_2 = g_strdup_printf("%s",str);
+    //         output_label_right = gtk_label_new(output_label_tmp_2);
+    //         element_neon_custom_on(GTK_WIDGET(output_label_right), "orange");
+    //         g_free(output_label_tmp);
+    //         g_free(output_label_tmp_2);
+    //         GtkWidget *spacer = gtk_label_new(""); // Label vide comme espacement
+    //         gtk_widget_set_visible(spacer, FALSE); // Rendu invisible
+    //         gtk_box_pack_start(GTK_BOX(labels_box), output_label_left , FALSE, FALSE, 0);
+    //         gtk_box_pack_start(GTK_BOX(labels_box), spacer            , FALSE, FALSE, 0); // Espacement horizontal
+    //         gtk_box_pack_start(GTK_BOX(labels_box), output_label_right, FALSE, FALSE, 0);
+    //     }
+    //     else if (strcmp(context, "Job en cours") == 0) {
+    //         gchar *output_label_tmp   = g_strdup("Test en cours : ");
+    //         output_label_left  = gtk_label_new(output_label_tmp);
+    //         gchar *output_label_tmp_2 = g_strdup_printf("%s",str);
+    //         output_label_right = gtk_label_new(output_label_tmp_2);
+    //         element_neon_custom_on(GTK_WIDGET(output_label_right), "orange");
+    //         g_free(output_label_tmp);
+    //         g_free(output_label_tmp_2);
+    //         GtkWidget *spacer = gtk_label_new(""); // Label vide comme espacement
+    //         gtk_widget_set_visible(spacer, FALSE); // Rendu invisible
+    //         gtk_box_pack_start(GTK_BOX(labels_box), output_label_left , FALSE, FALSE, 0);
+    //         gtk_box_pack_start(GTK_BOX(labels_box), spacer            , FALSE, FALSE, 0); // Espacement horizontal
+    //         gtk_box_pack_start(GTK_BOX(labels_box), output_label_right, FALSE, FALSE, 0);
+    //     }
+    //         gtk_box_pack_start(GTK_BOX(box), labels_box, TRUE, TRUE, 0);
+    //         g_string_free(output, TRUE);
+    //     return;
+    // }
+########################################### scrollable popup
+void create_popup_info(GtkTreeView *treeview) {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(treeview);
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gchar *branch_selected;
+
+    if (gtk_tree_selection_get_selected(selection, &model, &iter))
+        gtk_tree_model_get(model, &iter, 1, &branch_selected, -1);
+
+    if (branch_selected && !g_str_has_suffix(branch_selected, ".bak")) {
+        GtkWidget *popup_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+        gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(popup_scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+
+        GtkWidget *popup_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+        gtk_container_add(GTK_CONTAINER(popup_scrolled_window), popup_box);
+        popup = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+        // ... Autres propriétés de la fenêtre ...
+        gtk_container_add(GTK_CONTAINER(popup), popup_scrolled_window);
+        gchar *titre = g_strdup_printf("Infos sur %s", branch_selected);
+        gtk_window_set_title(GTK_WINDOW(popup), titre);
+        gtk_window_set_position(GTK_WINDOW(popup), GTK_WIN_POS_CENTER);
+
+
+--------------------------------------------------------------- versus
+
+void create_popup_info(GtkTreeView *treeview) {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(treeview);
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gchar *branch_selected;
+
+    if (gtk_tree_selection_get_selected(selection, &model, &iter))
+        gtk_tree_model_get(model, &iter, 1, &branch_selected, -1);
+
+    if (branch_selected && !g_str_has_suffix(branch_selected, ".bak")) {
+        popup = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gchar *titre = g_strdup_printf("Infos sur %s", branch_selected);
+        gtk_window_set_title(GTK_WINDOW(popup), titre);
+        gtk_window_set_position(GTK_WINDOW(popup), GTK_WIN_POS_CENTER);
+        gtk_window_set_default_size(GTK_WINDOW(popup), 600, 600);
+        GtkWidget *popup_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+        gtk_container_add(GTK_CONTAINER(popup), popup_box);
+###########################################
+void f_array(const gfloat *x_values, gfloat *y_values, gsize array_size) {
+    for (gsize i = 0; i < array_size; i++) {
+        y_values[i] = x_values[i]; // Any function here
+    }
+}
+
+gint y_values[1000] = {}; // Sample ordinate values
+
+gboolean on_draw_graph(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
+    // gfloat *y_values = (gfloat *)user_data;
+    gdouble zoom_x = 120;
+    gdouble zoom_y = 70;
+    GdkRectangle da;
+    gdouble dx = 5.0, dy = 10.0;
+    gdouble clip_x1 = 0.0, clip_y1 = 0.0, clip_x2 = 0.0, clip_y2 = 0.0;
+    GdkWindow *window = gtk_widget_get_window(widget);
+
+    gdk_window_get_geometry(window, &da.x, &da.y, &da.width, &da.height);
+
+    cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
+    cairo_paint(cr);
+    
+    // Sens "naturel" de lecture des fails
+    // cairo_translate(cr, 0, da.height); // Move origin to bottom-left corner
+
+    // Sens "Jenkins" de lecture des fails
+    gdouble center_x = clip_x2 / 2.0;
+    gdouble center_y = (clip_y2 - clip_y1) / 2.0;
+    cairo_translate(cr, center_x, center_y);
+
+        
+    gsize num_points = count_lines_in_file("/home/sdethyre/sandbox/dash_dev_boisson/last_builds_results")+1; // Number of points to draw
+    gboolean too_big = false;
+    gboolean too_too_big = false;
+    for (gsize i = 0; i < num_points; i++) {
+        if (y_values[i] > 5) too_big = true;
+        if (y_values[i] > 10) too_too_big = true;
+    }
+    if (too_big) zoom_y = 40;
+    if (too_too_big) zoom_y = 20;
+
+    if (num_points < 6) zoom_x = 150;
+    if (num_points < 5) zoom_x = 200;
+    if (num_points < 4) zoom_x = 300;
+
+    // Sens "naturel" de lecture des fails
+    // cairo_scale(cr, zoom_x, -zoom_y);  // Invert Y-axis
+
+    // Sens "Jenkins" de lecture des fails
+    cairo_scale(cr, zoom_x, zoom_y);  // Invert Y-axis
+
+    cairo_device_to_user_distance(cr, &dx, &dy);
+    cairo_clip_extents(cr, &clip_x1, &clip_y1, &clip_x2, &clip_y2);
+    cairo_set_line_width(cr, dx);
+
+    // Draw x-axis from -1 to clip_x2
+    cairo_set_source_rgb(cr, 0.0, 1.0, 0.0);
+    cairo_move_to(cr, -1.0, 0.0);
+    cairo_line_to(cr, clip_x2, 0.0);
+    cairo_stroke(cr);
+
+    // Draw y-axis from -1 to clip_y2
+    cairo_move_to(cr, 0.0, -1.0);
+    cairo_line_to(cr, 0.0, clip_y2);
+    cairo_stroke(cr);
+
+    gfloat x_values[num_points]; // Abscisses are indices
+
+    for (gsize i = 0; i < num_points; i++) {
+        x_values[i] = i;
+    }
+    /* Etiquettes - tentative *******************/
+    // Calculate minimum and maximum y values
+    // gfloat min_y = y_values[0];
+    // gfloat max_y = y_values[0];
+    // for (gsize i = 1; i < num_points; i++) {
+    //     if (y_values[i] < min_y) {
+    //         min_y = y_values[i];
+    //     }
+    //     if (y_values[i] > max_y) {
+    //         max_y = y_values[i];
+    //     }
+    // }
+
+    // // Determine the interval between labels
+    // gfloat label_interval = (max_y - min_y) / 5.0;
+
+    // // Draw y-axis labels and grid lines
+    // cairo_set_source_rgb(cr, 0.5, 0.5, 0.5); // Set color for grid lines
+    // for (gfloat y_label = min_y; y_label <= max_y; y_label += label_interval) {
+    //     gdouble y_position = (y_label - min_y) / (max_y - min_y) * (clip_y2 - clip_y1);
+        
+    //     // Draw the grid line
+    //     cairo_move_to(cr, 0.0, y_position);
+    //     cairo_line_to(cr, -10.0, y_position);
+    //     cairo_stroke(cr);
+        
+    //     // Draw the label text
+    //     cairo_set_source_rgb(cr, 0.0, 0.0, 0.0); // Set color for label text
+    //     cairo_move_to(cr, -20.0, y_position);
+    //     cairo_show_text(cr, g_strdup_printf("%.1f", y_label));
+    //     cairo_stroke(cr);
+    // }
+    /* Etiquettes - tentative ********************/
+
+    // Move to the first point
+    cairo_move_to(cr, x_values[0], y_values[0]);
+
+    // Draw lines connecting the points
+    for (gsize i = 1; i < num_points; i++) {
+        cairo_line_to(cr, x_values[i], y_values[i]);
+    }
+
+    cairo_set_source_rgba(cr, 1, 0.2, 0.2, 0.6);
+    // Sans remplissage
+    // cairo_stroke(cr);
+
+    // Remplissage du dessus de la courbe
+    cairo_stroke_preserve(cr); // Preserve the path for filling
+    cairo_fill(cr);
+    return FALSE;
+}
+
+/***  Version avec mask  ***/
+
+// gboolean on_draw_graph(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
+//     // gfloat *y_values = (gfloat *)user_data;
+//     gdouble zoom_x = 120;
+//     gdouble zoom_y = 70;
+//     GdkRectangle da;
+//     gdouble dx = 5.0, dy = 10.0;
+//     gdouble clip_x1 = 0.0, clip_y1 = 0.0, clip_x2 = 0.0, clip_y2 = 0.0;
+//     GdkWindow *window = gtk_widget_get_window(widget);
+
+//     gdk_window_get_geometry(window, &da.x, &da.y, &da.width, &da.height);
+
+//     cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
+//     cairo_paint(cr);
+    
+//     // Sens "naturel" de lecture des fails
+//     // cairo_translate(cr, 0, da.height); // Move origin to bottom-left corner
+
+//     // Sens "Jenkins" de lecture des fails
+//     gdouble center_x = clip_x2 / 2.0;
+//     gdouble center_y = (clip_y2 - clip_y1) / 2.0;
+//     cairo_translate(cr, center_x, center_y);
+
+        
+//     gsize num_points = count_lines_in_file("/home/sdethyre/sandbox/dash_dev_boisson/last_builds_results")+1; // Number of points to draw
+//     gboolean too_big = false;
+//     gboolean too_too_big = false;
+//     for (gsize i = 0; i < num_points; i++) {
+//         if (y_values[i] > 5) too_big = true;
+//         if (y_values[i] > 10) too_too_big = true;
+//     }
+//     if (too_big) zoom_y = 40;
+//     if (too_too_big) zoom_y = 20;
+
+//     if (num_points < 6) zoom_x = 150;
+//     if (num_points < 5) zoom_x = 200;
+//     if (num_points < 4) zoom_x = 300;
+
+//     // Sens "naturel" de lecture des fails
+//     // cairo_scale(cr, zoom_x, -zoom_y);  // Invert Y-axis
+
+//     // Sens "Jenkins" de lecture des fails
+//     cairo_scale(cr, zoom_x, zoom_y);  // Invert Y-axis
+
+//     cairo_device_to_user_distance(cr, &dx, &dy);
+//     cairo_clip_extents(cr, &clip_x1, &clip_y1, &clip_x2, &clip_y2);
+//     cairo_set_line_width(cr, dx);
+
+//     // Draw x-axis from -1 to clip_x2
+//     cairo_set_source_rgb(cr, 0.0, 1.0, 0.0);
+//     cairo_move_to(cr, -1.0, 0.0);
+//     cairo_line_to(cr, clip_x2, 0.0);
+//     cairo_stroke(cr);
+
+//     // Draw y-axis from -1 to clip_y2
+//     cairo_move_to(cr, 0.0, -1.0);
+//     cairo_line_to(cr, 0.0, clip_y2);
+//     cairo_stroke(cr);
+
+//     gfloat x_values[num_points]; // Abscisses are indices
+
+//     for (gsize i = 0; i < num_points; i++) {
+//         x_values[i] = i;
+//     }
+
+//     // Draw lines connecting the points
+//     cairo_move_to(cr, x_values[0], y_values[0]);
+//     for (gsize i = 1; i < num_points; i++) {
+//         cairo_line_to(cr, x_values[i], y_values[i]);
+//     }
+
+//     // Sauvegarder le contexte actuel
+//     cairo_save(cr);
+
+//     // Créer un masque pour la zone en dessous de la courbe
+//     cairo_t *mask = cairo_create(cairo_get_group_target(cr));
+
+//     // Dessiner la forme du masque (zone en dessous de la courbe)
+//     cairo_set_source_rgba(mask, 1, 1, 1, 1); // Couleur blanche pour le masque
+//     cairo_rectangle(mask, x_values[0], 0, x_values[num_points - 1] - x_values[0], clip_y2);
+//     cairo_fill(mask);
+
+//     // Appliquer le masque avec la couleur verte en dessous de la courbe
+//     cairo_mask(cr, cairo_get_source(mask));
+
+//     cairo_destroy(mask);
+
+//     // Restaurer le contexte sauvegardé
+//     cairo_restore(cr);
+
+//     // Remplissage du dessus de la courbe avec la couleur rouge
+//     cairo_set_source_rgba(cr, 1, 0.2, 0.2, 0.6);
+//     cairo_stroke_preserve(cr); // Preserve the path for filling
+//     cairo_fill(cr);
+
+//     return FALSE;
+// }
+###########################################
+
+
+// void *async_create_line_popup(void *params) {
+//     CreatePopupParams *popup_params = (CreatePopupParams *)params;
+//     create_line_popup(popup_params->popup_box, popup_params->script_name, popup_params->branch_name);
+//     g_free(popup_params->script_name);
+//     g_free(popup_params->branch_name);
+//     g_free(popup_params);
+//     return NULL;
+// }
+
+###########################################
+
+void create_graph_fails() {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(treeview);
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gchar *branch_selected;
+
+    if (!gtk_tree_selection_get_selected(selection, &model, &iter))
+        return;
+
+    gtk_tree_model_get(model, &iter, 1, &branch_selected, -1);
+
+    if (branch_selected && !g_str_has_suffix(branch_selected, ".bak")) {
+        gchar *titre = g_strdup_printf("Builds Jenkins sur %s", branch_selected);
+        
+        popup_graph = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gtk_window_set_title(GTK_WINDOW(popup_graph), titre);
+        gtk_window_set_position(GTK_WINDOW(popup_graph), GTK_WIN_POS_CENTER);
+        gtk_window_set_default_size(GTK_WINDOW(popup_graph), 600, 500);
+
+        GtkWidget *popup_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+        gtk_container_add(GTK_CONTAINER(popup_graph), popup_box);
+
+        gchar directory[256] = "/home/sdethyre/public_html/openads/";
+        gchar file_path[512];
+        snprintf(file_path, sizeof(file_path), "%s%s", directory, branch_selected);
+
+        gchar *command_populate_output = g_strdup_printf("python3 /home/sdethyre/sandbox/dash_dev_boisson/count_last_builds_fails.py %s", branch_selected);
+        system(command_populate_output);
+        g_free(command_populate_output);
+
+        FILE *file = fopen("/home/sdethyre/sandbox/dash_dev_boisson/last_builds_results", "r");
+        if (file == NULL) {
+            perror("Erreur lors de l'ouverture du fichier");
+            g_free(titre);  // Libération de la mémoire allouée
+            return;
+        }
+
+        char line[1024];
+        int line_count = count_lines_in_file("/home/sdethyre/sandbox/dash_dev_boisson/last_builds_results");
+        int i = line_count;  // Utilisation directe de line_count au lieu de recalculer
+        while (fgets(line, sizeof(line), file) != NULL && i >= 0) {
+            int build_number;
+            int error_count;
+            gchar fails_info[100];
+            int float_fails_info;
+
+            if (sscanf(line, "Build %d - errors: %d, fails: %99[^\n]", &build_number, &error_count, fails_info) == 3) {
+                float_fails_info = atoi(fails_info);
+                y_values[i] = (float_fails_info >= INT_MIN && float_fails_info <= INT_MAX) ? float_fails_info : 0;
+            }
+            
+            --i;
+        }
+
+        //  while (fgets(line, sizeof(line), file) != NULL) {
+        //     int build_number;
+        //     int error_count;
+        //     gchar fails_info[100];
+        //     int float_fails_info;
+        //     if (sscanf(line, "Build %d - errors: %d, fails: %99[^\n]", &build_number, &error_count, fails_info) == 3) {
+        //         float_fails_info = atoi(fails_info);
+        //         if (float_fails_info >= INT_MIN && float_fails_info <= INT_MAX) {
+        //             y_values[i] = float_fails_info;
+        //         } else {
+        //             y_values[i] = 0;
+                    // Gérer le cas où fails_info ne peut pas être converti en gfloat
+            //     }
+            // }
+            // char info[1024];
+            // if (sscanf(line, "Build %d - errors: %d, fails: %[^\n]", &build_number, &error_count, info) >= 2) {
+            //     gchar * build_fails = g_strdup_printf("\t\t\t\t\t%d\t\t\t\t\t%d\t\t\t\t     %s\n", build_number, error_count, fails_info);
+            //     // gchar * build_fails=g_strdup_printf("y_values[%d] = %d\n", i, y_values[i]);
+            //     g_string_append(all_builds_fails, build_fails);
+            // }
+        //     --i;
+        // }
+        // gchar *tmp_modified_label = g_strdup_printf("\n\t\t\t\tNuméros\t\t\tErreurs\t\t\tFails\n\n%s", all_builds_fails->str);
+        // GtkWidget *modified_label = gtk_label_new(tmp_modified_label);
+        // gtk_widget_set_margin_top(modified_label, 10); 
+        // gtk_box_pack_start(GTK_BOX(popup_box), modified_label, TRUE, TRUE, 0);
+        // g_free(tmp_modified_label);
+        
+        fclose(file);
+
+        GtkWidget *da = gtk_drawing_area_new();
+        gtk_widget_set_size_request(da, 200, 400);
+        gtk_container_add(GTK_CONTAINER(popup_box), da);
+        g_signal_connect(G_OBJECT(da), "draw", G_CALLBACK(on_draw_graph), NULL);
+
+        GtkWidget *button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+        gtk_box_pack_start(GTK_BOX(popup_box), button_box, TRUE, TRUE, 0);
+
+        GtkWidget *close_button = gtk_button_new_with_label("Fermer");
+        g_signal_connect(G_OBJECT(close_button), "clicked", G_CALLBACK(on_popup_close_graph), NULL);
+        gtk_container_add(GTK_CONTAINER(button_box), close_button);
+
+        g_signal_connect(G_OBJECT(popup_graph), "destroy", G_CALLBACK(on_popup_destroy_graph), NULL);
+        gtk_widget_show_all(popup_graph);
+
+        g_free(titre);  // Libération de la mémoire allouée pour 'titre'
+    }
+}
+
+###########################################
+
+void create_builds_list() {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gchar *branch_selected;
+
+    if (gtk_tree_selection_get_selected(selection, &model, &iter))
+        gtk_tree_model_get(model, &iter, 1, &branch_selected, -1);
+
+    if (branch_selected && !g_str_has_suffix(branch_selected, ".bak")) {
+        popup_builds = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gchar *titre = g_strdup_printf("Builds Jenkins sur %s", branch_selected);
+        gtk_window_set_title(GTK_WINDOW(popup_builds), titre);
+        gtk_window_set_position(GTK_WINDOW(popup_builds), GTK_WIN_POS_CENTER);
+        gtk_window_set_default_size(GTK_WINDOW(popup_builds), 600, 500);
+        GtkWidget *popup_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+        gtk_container_add(GTK_CONTAINER(popup_builds), popup_box);
+        gchar directory[256] = "/home/sdethyre/public_html/openads/";
+        gchar file_path[512];
+        snprintf(file_path, sizeof(file_path), "%s%s", directory, branch_selected);
+ 
+        gchar *command_populate_output = g_strdup_printf("python3 /home/sdethyre/sandbox/dash_dev_boisson/count_last_builds_fails.py %s", branch_selected);
+        system(command_populate_output);
+        g_free(command_populate_output);
+
+        FILE *file = fopen("/home/sdethyre/sandbox/dash_dev_boisson/last_builds_results", "r"); // Remplacez le chemin par le chemin de votre fichier
+        if (file == NULL) {
+            perror("Erreur lors de l'ouverture du fichier");
+            return;
+        }
+        char line[1024];
+        for (int i = count_lines_in_file("/home/sdethyre/sandbox/dash_dev_boisson/last_builds_results") ; i >= 0 ; --i) y_values[i] = 0;
+        int i = count_lines_in_file("/home/sdethyre/sandbox/dash_dev_boisson/last_builds_results");
+        // float local_y_values[5] = {0};
+        GString *all_builds_fails= g_string_new("");
+        while (fgets(line, sizeof(line), file) != NULL && i >= 0 ) {
+            int build_number;
+            int error_count;
+            gchar fails_info[100];
+            int float_fails_info;
+            if (sscanf(line, "Build %d - errors: %d, fails: %99[^\n]", &build_number, &error_count, fails_info) == 3) {
+                float_fails_info = atoi(fails_info);
+                if (float_fails_info >= INT_MIN && float_fails_info <= INT_MAX) {
+                    y_values[i] = float_fails_info;
+                } else {
+                    y_values[i] = 0;
+                    // Gérer le cas où fails_info ne peut pas être converti en gfloat
+                }
+            }
+            char info[1024];
+            if (sscanf(line, "Build %d - errors: %d, fails: %[^\n]", &build_number, &error_count, info) >= 2) {
+                gchar * build_fails = g_strdup_printf("\t\t\t\t\t%d\t\t\t\t\t%d\t\t\t\t     %s\n\n", build_number, error_count, fails_info);
+                // gchar * build_fails=g_strdup_printf("y_values[%d] = %d\n", i, y_values[i]);
+                g_string_append(all_builds_fails, build_fails);
+            }
+            --i;
+        }
+        gchar *tmp_modified_label = g_strdup_printf("\n\t\t\t\tNuméros\t\t\tErreurs\t\t\tFails\n\n%s", all_builds_fails->str);
+        GtkWidget *modified_label = gtk_label_new(tmp_modified_label);
+        gtk_widget_set_margin_top(modified_label, 10); 
+        gtk_box_pack_start(GTK_BOX(popup_box), modified_label, TRUE, TRUE, 0);
+        g_free(tmp_modified_label);
+
+        fclose(file);
+        // GtkWidget *da = gtk_drawing_area_new();
+        // gtk_widget_set_size_request(da, 200, 400);
+        // // Ajouter le GtkDrawingArea au conteneur 'popup_box'
+        // gtk_container_add(GTK_CONTAINER(popup_box), da);
+        // // g_signal_connect(G_OBJECT(da), "draw", G_CALLBACK(on_draw_graph), y_values);  
+        // g_signal_connect(G_OBJECT(da), "draw", G_CALLBACK(on_draw_graph), NULL);  
+      
+        GtkWidget *button_box   = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+        gtk_box_pack_start(GTK_BOX(popup_box), button_box, TRUE, TRUE, 0);
+
+        GtkWidget *close_button = gtk_button_new_with_label("Fermer");
+        g_signal_connect(G_OBJECT(close_button), "clicked", G_CALLBACK(on_popup_close_builds), NULL);
+        gtk_container_add(GTK_CONTAINER(button_box), close_button);
+
+        g_signal_connect(G_OBJECT(popup_builds), "destroy", G_CALLBACK(on_popup_destroy_builds), NULL);
+        gtk_widget_show_all(popup_builds);
+    }
+}
+
+###########################################
+
+void create_popup_info(GtkTreeView *treeview, gboolean show_last_commit) {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(treeview);
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    gchar *branch_selected;
+    gint width = 550;
+
+    if (gtk_tree_selection_get_selected(selection, &model, &iter))
+        gtk_tree_model_get(model, &iter, 1, &branch_selected, -1);
+
+    if (branch_selected && !g_str_has_suffix(branch_selected, ".bak")) {
+        popup_info = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gchar *titre = g_strdup_printf("Infos - %s", branch_selected);
+        gtk_window_set_title(GTK_WINDOW(popup_info), titre);
+        gtk_window_set_position(GTK_WINDOW(popup_info), GTK_WIN_POS_CENTER);
+        gtk_window_set_default_size(GTK_WINDOW(popup_info), width, 300);
+        GtkWidget *popup_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+        gtk_container_add(GTK_CONTAINER(popup_info), popup_box);
+
+        gchar directory[256] = "/home/sdethyre/public_html/openads/";
+        gchar file_path[512];
+        snprintf(file_path, sizeof(file_path), "%s%s", directory, branch_selected);
+
+        gchar *modified;
+        int count = count_modified_files(file_path);
+        if (count < 1) modified = g_strdup_printf("Aucun fichier modifié en local"); 
+        else if (count < 2) modified = g_strdup_printf("Modifié en local : %d", count); 
+        else modified = g_strdup_printf("Modifiés en local : %d", count); 
+        GtkWidget *modified_label = gtk_label_new(modified);
+        gtk_widget_set_margin_top(modified_label, 20); 
+        gtk_box_pack_start(GTK_BOX(popup_box), modified_label, TRUE, TRUE, 0);
+
+        if(show_last_commit){
+            /*************** Dernier commit effecté sur la branche <!> coûteux à l'exécution ****************/
+            gchar *command_tmp = g_strdup_printf("svn log -r HEAD:1 --limit 1 svn+ssh://sdethyre@scm.adullact.net/svn/openfoncier/branches/%s", branch_selected);
+            gchar *commit_message = execute_command_custom(command_tmp);
+            gchar *committed_full;
+            if (commit_message == NULL) committed_full = g_strdup_printf("Branche inexistante");
+            else committed_full = g_strdup_printf("Dernier commit\n\n%s", commit_message);
+            GtkWidget *committed_label = gtk_label_new(committed_full);
+
+            // Ajouter les marges de début et de fin
+            gtk_widget_set_margin_start(committed_label, 50);
+            gtk_widget_set_margin_end(committed_label, 50);
+
+            gtk_widget_set_margin_top(committed_label, 20);
+            gtk_label_set_line_wrap(GTK_LABEL(committed_label), TRUE);
+            gtk_label_set_line_wrap_mode(GTK_LABEL(committed_label), PANGO_WRAP_WORD_CHAR);
+            gtk_box_pack_start(GTK_BOX(popup_box), committed_label, TRUE, TRUE, 0);
+        }
+        gchar *command_populate_last_build = g_strdup_printf("python3 /home/sdethyre/sandbox/dash_dev_boisson/get_last_build_api_results.py %s", branch_selected);
+        system(command_populate_last_build);
+        g_free(command_populate_last_build);
+
+        // int status_last_build;
+        // wait(&status_last_build);
+        
+        gchar *command_populate_output = g_strdup_printf("python3 /home/sdethyre/sandbox/dash_dev_boisson/output_jenkins_to_file.py %s", branch_selected);
+        system(command_populate_output);
+        g_free(command_populate_output);
+
+        // int status_output;
+        // wait(&status_output);
+        
+        gchar *command = g_strdup_printf("python3 /home/sdethyre/sandbox/dash_dev_boisson/fails.py %s", branch_selected);
+        FILE *fp = popen(command, "r");
+        if (fp == NULL) {
+            g_free(command);
+        }
+        char buffer[128];
+        GString *output = g_string_new(NULL);  
+        while (fgets(buffer, sizeof(buffer), fp) != NULL) g_string_append(output, buffer);
+        pclose(fp);
+        g_free(command);
+        g_strstrip(output->str);    // Supprimer les espaces de début et de fin
+        g_strchomp(output->str);
+        if (strcmp(output->str, "Job inexistant : erreur 404") == 0) {
+            gtk_window_set_default_size(GTK_WINDOW(popup_info), width, 200);
+            create_line_popup(popup_box, "Job inexistant : erreur 404"                           , branch_selected, "404");
+        }
+        else if (strcmp(output->str, "Dernier job incomplet") == 0) {
+            gtk_window_set_default_size(GTK_WINDOW(popup_info), width, 750);
+            GtkWidget *inter_line = gtk_label_new("━━━━━━━━━━");  
+            gtk_box_pack_start(GTK_BOX(popup_box), inter_line, TRUE, TRUE, 0);
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/fails_d.py"              , branch_selected, "Dernier job incomplet");                
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/date_hour_d.py"          , branch_selected, "Dernier job incomplet");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/build_creator_d.py"      , branch_selected, "Dernier job incomplet");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/last_test_d.py"          , branch_selected, "Dernier job incomplet");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/count_display_fails_d.py", branch_selected, "Dernier job incomplet");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/percent_d.py"            , branch_selected, "Dernier job incomplet");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/percent_by_line_d.py"    , branch_selected, "Dernier job incomplet");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/moyenne.py"              , branch_selected, "Dernier job incomplet");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/authors_d.py"            , branch_selected, "Dernier job incomplet");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/changes_jenkins_d.py"    , branch_selected, "Dernier job incomplet");
+        }
+        else if (strcmp(output->str, "Job en cours") == 0) {
+            gtk_window_set_default_size(GTK_WINDOW(popup_info), width, 800);
+            GtkWidget *inter_line = gtk_label_new("━━━━━━━━━━");  
+            gtk_box_pack_start(GTK_BOX(popup_box), inter_line, TRUE, TRUE, 0);
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/fails_d.py"              , branch_selected, "Job en cours");                
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/date_hour_d.py"          , branch_selected, "Job en cours");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/build_creator_d.py"      , branch_selected, "Job en cours");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/last_test_d.py"          , branch_selected, "Job en cours");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/count_display_fails_d.py", branch_selected, "Job en cours");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/percent_d.py"            , branch_selected, "Job en cours");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/percent_by_line_d.py"    , branch_selected, "Job en cours");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/moyenne.py"              , branch_selected, "Job en cours");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/authors_d.py"            , branch_selected, "Job en cours");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/changes_jenkins_d.py"    , branch_selected, "Job en cours");
+        }
+        else {
+            gtk_window_set_default_size(GTK_WINDOW(popup_info), width, 550);
+            GtkWidget *inter_line = gtk_label_new("━━━━━━━━━━");  
+            gtk_box_pack_start(GTK_BOX(popup_box), inter_line, TRUE, TRUE, 0);
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/fails_d.py"              , branch_selected, "");                
+            GtkWidget *output_label_3 = gtk_label_new("Dernier job achevé à 100 %\n");
+            gtk_box_pack_start(GTK_BOX(popup_box), output_label_3, TRUE, TRUE, 0);
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/date_hour_d.py"          , branch_selected, "");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/build_creator_d.py"      , branch_selected, "");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/authors_d.py"            , branch_selected, "");
+            create_line_popup(popup_box, "/home/sdethyre/sandbox/dash_dev_boisson/changes_jenkins_d.py"    , branch_selected, "");
+        }
+
+        g_string_free(output, TRUE);
+
+        GtkWidget *button_box   = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+        gtk_box_pack_start(GTK_BOX(popup_box), button_box, TRUE, TRUE, 0);
+
+        GtkWidget *close_button = gtk_button_new_with_label("Fermer");
+        g_signal_connect(G_OBJECT(close_button), "clicked", G_CALLBACK(on_popup_close_info), NULL);
+        gtk_container_add(GTK_CONTAINER(button_box), close_button);
+        
+        GtkWidget *builds_button = gtk_button_new_with_label("Builds");
+        g_signal_connect(G_OBJECT(builds_button), "clicked", G_CALLBACK(create_builds_list), treeview);
+        gtk_container_add(GTK_CONTAINER(button_box), builds_button);
+
+        GtkWidget *graph_button = gtk_button_new_with_label("Graph");
+        g_signal_connect(G_OBJECT(graph_button), "clicked", G_CALLBACK(create_graph_fails), treeview);
+        gtk_container_add(GTK_CONTAINER(button_box), graph_button);
+
+        g_signal_connect(G_OBJECT(popup_info), "destroy", G_CALLBACK(on_popup_destroy_info), NULL);
+        gtk_widget_show_all(popup_info);
+    }
+}
+
+###########################################

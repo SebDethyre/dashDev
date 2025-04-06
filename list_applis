@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Exécuter la commande et filtrer les résultats
+results=$(ls ~/public_html)
+
+# Créer un tableau pour stocker les résultats modifiés
+modified_results=()
+
+# Parcourir les résultats et les modifier selon les conditions spécifiées
+for line in $results; do
+#   if [[ $line =~ ^(3|5|rg|refonte-graphique).* && $line != *".bak" ]]; then
+  if [[ $line && $line != *".bak" && $line != *".txt" && $line != *"framework-openmairie" ]]; then
+    modified_results+=("$line")
+  fi
+done
+
+# Enregistrer les résultats modifiés dans un fichier
+output_file="/home/sdethyre/sandbox/dash_dev_boisson/results_applis.txt"
+rm -f "$output_file"  # Supprimer le fichier s'il existe déjà
+
+for result in "${modified_results[@]}"; do
+  echo "$result" >> "$output_file"
+done

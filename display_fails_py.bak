@@ -1,0 +1,30 @@
+import sys
+import requests
+import re
+def get_fail_count_for_branch(branch):
+    url = f"https://ci1.atreal.fr/view/P2%20devs/job/openADS__P2_{branch}/lastBuild/consoleText"
+    response = requests.get(url, auth=('sdethyre', 'mIeLvWHXVJjwfqp2'))
+
+    if response.status_code == 200:
+        lines = response.text.split("\n")
+        found_fail = False
+        for line in lines:
+            if "FAIL" in line:
+                if "Tests" in line:
+                    if re.search(r'Tests\s*\|\s*FAIL\s*\|', line):
+                        line = line.strip() + "\n"
+                    else:
+                        line = "==============================================================\n" + line.strip() + "\n==============================================================\n\n"
+                print(line)
+                found_fail = True
+        if not found_fail:
+            print("Aucun fail trouvé")
+    else:
+        print("Job inexistant : erreur", response.status_code)
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Veuillez fournir le nom de la branche en tant qu'argument")
+    else:
+        branch = sys.argv[1]
+        get_fail_count_for_branch(branch)

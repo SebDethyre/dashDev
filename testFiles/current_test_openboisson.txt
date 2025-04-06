@@ -1,0 +1,1 @@
+om-tests -c runone -t 0210_declaration.robot

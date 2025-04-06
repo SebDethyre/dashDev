@@ -1,0 +1,1 @@
+merge(branch): fusion de la branche dev 10597_EVO_vitesse_flux_sortants dans la branche inte v6.12.0-develop

@@ -1,0 +1,22 @@
+#!/usr/bin/expect -f
+
+set password "Spdrmns65,"
+set terminal_title "Postgres"
+
+# Exécuter ~/bin/easyTests/./currentTest avant d'attendre le mot de passe
+set timeout 1.2
+
+spawn bash -c "sudo less +F /var/log/postgresql/postgresql.log"
+send_user "\033]0;$terminal_title\007"
+# Attendre la demande du mot de passe
+expect "Mot de passe de sdethyre :"
+send "$password\r"
+
+# Attendre que la commande soit exécutée et que le processus se termine
+expect {
+    timeout {
+        # Réessayer après 10 secondes
+        sleep 10
+        exp_continue
+    }
+}

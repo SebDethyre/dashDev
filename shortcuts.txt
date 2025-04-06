@@ -1,0 +1,19 @@
+  n     :  nouveau (branche, ticket Adullact, job Jenkins, ticket interne)
+
+  w    :  infos job Jenkins
+
+  i      :  infos sur les fichiers en local
+
+  l      :  log Robot Framework
+
+  c     :  commit
+  
+  t      :  ticket interne (si renseigné dans ticket_numbers.txt) 
+  
+  m    :  outil de merge 
+
+  b      :  derniers builds
+
+  g      :  graphique - fails des derniers builds
+ 
+ ━━   :  ouverture de VSCode, du job Jenkins, du ticket interne et de l'appli

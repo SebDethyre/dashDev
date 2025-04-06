@@ -1,0 +1,6 @@
+openads
+openaria
+opencimetiere
+opendebitdeboisson
+openelec
+openresultat

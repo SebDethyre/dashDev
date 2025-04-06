@@ -1,0 +1,18 @@
+#!/usr/bin/expect -f
+
+set password "Spdrmns65,"
+set timeout 2
+set project_folder [string trimright [lindex $argv 0]]
+set current_test_file [string trimright [lindex $argv 1]]
+
+# Utilisation directe des variables sans $argv
+if {$project_folder == "openads"} {
+    spawn bash -c "cd /home/sdethyre/public_html/$project_folder/$current_test_file && cd tests && . venv omdt && export VENV=True && om-tests -c initenv"
+}
+if {$project_folder == "opendebitdeboisson"} {
+    spawn bash -c "cd /home/sdethyre/public_html/$project_folder/$current_test_file && cd tests && . venv p3-omdt && export VENV=True && om-tests -c initenv"
+}
+expect "Mot de passe de sdethyre :"
+send "$password\r"
+
+expect eof

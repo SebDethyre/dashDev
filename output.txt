@@ -1,0 +1,601 @@
+Lancé par une alarme périodique
+Exécution en tant que SYSTEM
+Construction à distance sur seymour dans le répertoire de travail /home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants
+Cleaning local Directory .
+Checking out https://scm.adullact.net/anonscm/svn/openfoncier/branches/10597_EVO_vitesse_flux_sortants at revision '2025-04-04T20:56:00.040 +0200' --quiet
+
+<-- Got one external: core, svn url: https://scm.adullact.net/anonscm/svn/openmairie/openmairie_exemple/tags/4.11.0-a6/core -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/openmairie_exemple/tags/4.11.0-a6/core' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/core'
+At revision 5029
+
+
+<-- Got one external: lib, svn url: https://scm.adullact.net/anonscm/svn/openmairie/openmairie_exemple/tags/4.11.0-a6/lib -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/openmairie_exemple/tags/4.11.0-a6/lib' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/lib'
+
+<-- Got one external: jquery, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery/tags/1.7.2 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery/tags/1.7.2' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/lib/jquery'
+At revision 5029
+
+
+<-- Got one external: jquery-ui, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery-ui/tags/1.8.21 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery-ui/tags/1.8.21' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/lib/jquery-ui'
+At revision 5029
+
+
+<-- Got one external: tinymce, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/tinymce/tags/4.3.2 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/tinymce/tags/4.3.2' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/lib/tinymce'
+At revision 5029
+
+
+<-- Got one external: jquery-thirdparty, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery-thirdparty/tags/1.3.0 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery-thirdparty/tags/1.3.0' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/lib/jquery-thirdparty'
+At revision 5029
+
+
+<-- Got one external: openlayers, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/openlayers/tags/2.13.1-support-ssl-osm -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/openlayers/tags/2.13.1-support-ssl-osm' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/lib/openlayers'
+At revision 5029
+
+
+<-- Got one external: om-theme, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/om-theme/kied/tags/2.0.0 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/om-theme/kied/tags/2.0.0' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/lib/om-theme'
+
+<-- Got one external: jquery-ui-theme, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery-ui-theme/om_kied/tags/1.8.16 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery-ui-theme/om_kied/tags/1.8.16' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/lib/om-theme/jquery-ui-theme'
+At revision 5029
+
+At revision 5029
+
+
+<-- Got one external: leaflet, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/leaflet/tags/1.9.3-om1 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/leaflet/tags/1.9.3-om1' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/lib/leaflet'
+At revision 5029
+
+
+<-- Got one external: fontawesome, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/fontawesome/tags/4.7.0-om1 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/fontawesome/tags/4.7.0-om1' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/lib/fontawesome'
+At revision 5029
+
+At revision 5029
+
+
+<-- Got one external: php, svn url: https://scm.adullact.net/anonscm/svn/openmairie/openmairie_exemple/tags/4.11.0-a6/php -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/openmairie_exemple/tags/4.11.0-a6/php' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/php'
+
+<-- Got one external: fpdf, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/fpdf/tags/1.8.5 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/fpdf/tags/1.8.5' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/php/fpdf'
+At revision 5029
+
+
+<-- Got one external: tcpdf, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/tcpdf/tags/6.5.0 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/tcpdf/tags/6.5.0' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/php/tcpdf'
+At revision 5029
+
+
+<-- Got one external: pear, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/pear/pear-core/tags/v1.10.12 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/pear/pear-core/tags/v1.10.12' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/php/pear'
+At revision 5029
+
+
+<-- Got one external: db, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/pear/DB/tags/v1.10.0-om2 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/pear/DB/tags/v1.10.0-om2' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/php/db'
+At revision 5029
+
+
+<-- Got one external: phpmailer, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/phpmailer/tags/v5.2.23 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/phpmailer/tags/v5.2.23' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/php/phpmailer'
+At revision 5029
+
+At revision 5029
+
+
+<-- Got one external: chosen, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/chosen/tags/1.8.3 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/chosen/tags/1.8.3' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/app/lib/chosen'
+At revision 5029
+
+
+<-- Got one external: pdfjs-2.10.377, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/pdf.js/tags/2.10.377 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/pdf.js/tags/2.10.377' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/app/lib/pdfjs-2.10.377'
+At revision 5029
+
+
+<-- Got one external: pdfjs-2.0.943, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/pdf.js/tags/2.0.943 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/pdf.js/tags/2.0.943' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/app/lib/pdfjs-2.0.943'
+At revision 5029
+
+
+<-- Got one external: gridjs, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/grid.js/tags/4.0.0 -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/grid.js/tags/4.0.0' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/app/lib/gridjs'
+At revision 5029
+
+
+<-- Got one external: jscolor, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/jscolor -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/jscolor' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/app/lib/jscolor'
+At revision 5029
+
+
+<-- Got one external: restler, svn url: https://scm.adullact.net/anonscm/svn/openmairie/externals/restler/tags/2.2.0-charset -->
+RÃ©cupÃ©ration de 'https://scm.adullact.net/anonscm/svn/openmairie/externals/restler/tags/2.2.0-charset' en rev -1 vers '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/services/php/restler'
+At revision 5029
+
+At revision 19976
+
+No changes for https://scm.adullact.net/anonscm/svn/openfoncier/branches/10597_EVO_vitesse_flux_sortants since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/openmairie_exemple/tags/4.11.0-a6/core since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/openmairie_exemple/tags/4.11.0-a6/lib since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery/tags/1.7.2 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery-ui/tags/1.8.21 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/tinymce/tags/4.3.2 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery-thirdparty/tags/1.3.0 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/openlayers/tags/2.13.1-support-ssl-osm since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/om-theme/kied/tags/2.0.0 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/jquery-ui-theme/om_kied/tags/1.8.16 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/leaflet/tags/1.9.3-om1 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/fontawesome/tags/4.7.0-om1 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/openmairie_exemple/tags/4.11.0-a6/php since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/fpdf/tags/1.8.5 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/tcpdf/tags/6.5.0 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/pear/pear-core/tags/v1.10.12 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/pear/DB/tags/v1.10.0-om2 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/phpmailer/tags/v5.2.23 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/chosen/tags/1.8.3 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/pdf.js/tags/2.10.377 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/pdf.js/tags/2.0.943 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/grid.js/tags/4.0.0 since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/jscolor since the previous build
+No changes for https://scm.adullact.net/anonscm/svn/openmairie/externals/restler/tags/2.2.0-charset since the previous build
+[openADS__P2_10597_EVO_vitesse_flux_sortants] $ /bin/sh -xe /tmp/jenkins12965532353775725300.sh
++ php -v
+PHP 8.0.30 (cli) (built: Nov 24 2024 08:22:56) ( NTS )
+Copyright (c) The PHP Group
+Zend Engine v4.0.30, Copyright (c) Zend Technologies
+    with Zend OPcache v8.0.30, Copyright (c), by Zend Technologies
++ psql --version
+psql (PostgreSQL) 15.12 (Debian 15.12-0+deb12u2)
++ phpunit --version
+PHPUnit 9.6.22 by Sebastian Bergmann and contributors.
+
++ composer --version
+Composer version 2.8.4 2024-12-11 11:57:47
+PHP version 8.0.30 (/usr/bin/php8.0)
+Run the "diagnose" command to get more detailed diagnostics output.
++ node -v
+v20.18.1
++ npm -v
+10.8.2
++ python3.9 --version
+Python 3.9.18
++ composer install
+Installing dependencies from lock file (including require-dev)
+Verifying lock file contents can be installed on current platform.
+Package operations: 4 installs, 0 updates, 0 removals
+  - Installing paragonie/random_compat (v9.99.100): Extracting archive
+  - Installing paragonie/constant_time_encoding (v2.7.0): Extracting archive
+  - Installing phpseclib/phpseclib (3.0.41): Extracting archive
+  - Installing jumbojett/openid-connect-php (v1.0.0): Extracting archive
+Generating autoload files
+1 package you are using is looking for funding.
+Use the `composer fund` command to find out more!
+> npm clean-install --omit=dev
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+
+added 41 packages, and audited 42 packages in 3s
+
+8 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+> npm run build
+
+> openads-om@1.1.0 build
+> npm run copycss && sass --no-source-map --style=compressed app/scss:app/css
+
+
+> openads-om@1.1.0 copycss
+> shx cp -r node_modules/{inter-ui/,remixicon/} app/lib
+
++ composer initdevenv
+> npm install --include=dev
+
+added 227 packages, and audited 269 packages in 6s
+
+51 packages are looking for funding
+  run `npm fund` for details
+
+5 vulnerabilities (3 high, 2 critical)
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.
++ python3.9 -m venv omdevtools
++ . omdevtools/bin/activate
++ deactivate nondestructive
++ [ -n  ]
++ [ -n  ]
++ [ -n  -o -n  ]
++ [ -n  ]
++ unset VIRTUAL_ENV
++ [ ! nondestructive = nondestructive ]
++ VIRTUAL_ENV=/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/omdevtools
++ export VIRTUAL_ENV
++ _OLD_VIRTUAL_PATH=/usr/local/bin:/usr/bin:/bin:/usr/games
++ PATH=/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/omdevtools/bin:/usr/local/bin:/usr/bin:/bin:/usr/games
++ export PATH
++ [ -n  ]
++ [ -z  ]
++ _OLD_VIRTUAL_PS1=$ 
++ PS1=(omdevtools) $ 
++ export PS1
++ [ -n  -o -n  ]
++ pip install -r tests/pip-requirements.txt
+Collecting openmairie.devtools==1.1.0
+  Using cached openmairie.devtools-1.1.0.tar.gz (22 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting openmairie.robotframework==4.11.10001
+  Using cached openmairie.robotframework-4.11.10001.tar.gz (34 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting maildump==1.0
+  Using cached maildump-1.0-py3-none-any.whl (402 kB)
+Collecting selenium==2.53.6
+  Using cached selenium-2.53.6-py2.py3-none-any.whl (884 kB)
+Collecting robotframework==3.0.4
+  Using cached robotframework-3.0.4.tar.gz (443 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting robotframework-seleniumlibrary==3.1.1
+  Using cached robotframework_seleniumlibrary-3.1.1-py2.py3-none-any.whl (77 kB)
+Collecting robotframework-selenium2screenshots==0.8.1
+  Using cached robotframework_selenium2screenshots-0.8.1-py2.py3-none-any.whl (9.0 kB)
+Collecting requests==2.22.0
+  Using cached requests-2.22.0-py2.py3-none-any.whl (57 kB)
+Collecting robotframework-requests==0.5.0
+  Using cached robotframework-requests-0.5.0.tar.gz (9.1 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting Pillow==9.1.0
+  Using cached Pillow-9.1.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.3 MB)
+Collecting robotframework-archivelibrary==0.4.0
+  Using cached robotframework-archivelibrary-0.4.0.tar.gz (3.2 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting psycopg2-binary==2.9.3
+  Using cached psycopg2_binary-2.9.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+Collecting python-daemon==2.2.4
+  Using cached python_daemon-2.2.4-py2.py3-none-any.whl (35 kB)
+Collecting Unidecode==1.2.0
+  Using cached Unidecode-1.2.0-py2.py3-none-any.whl (241 kB)
+Requirement already satisfied: setuptools in ./omdevtools/lib/python3.9/site-packages (from openmairie.devtools==1.1.0->-r tests/pip-requirements.txt (line 1)) (58.1.0)
+Collecting jinja2
+  Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+Collecting Logbook
+  Using cached logbook-1.8.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (491 kB)
+Collecting Flask
+  Using cached flask-3.1.0-py3-none-any.whl (102 kB)
+Collecting passlib
+  Using cached passlib-1.7.4-py2.py3-none-any.whl (525 kB)
+Collecting html5lib
+  Using cached html5lib-1.1-py2.py3-none-any.whl (112 kB)
+Collecting lockfile
+  Using cached lockfile-0.12.2-py2.py3-none-any.whl (13 kB)
+Collecting gevent
+  Using cached gevent-24.11.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (6.7 MB)
+Collecting pytz
+  Using cached pytz-2025.2-py2.py3-none-any.whl (509 kB)
+Collecting beautifulsoup4
+  Using cached beautifulsoup4-4.13.3-py3-none-any.whl (186 kB)
+Collecting robotframework-selenium2library>=3.0.0b1
+  Using cached robotframework_selenium2library-3.0.0-py2.py3-none-any.whl (6.2 kB)
+Collecting urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1
+  Using cached urllib3-1.25.11-py2.py3-none-any.whl (127 kB)
+Collecting certifi>=2017.4.17
+  Using cached certifi-2025.1.31-py3-none-any.whl (166 kB)
+Collecting idna<2.9,>=2.5
+  Using cached idna-2.8-py2.py3-none-any.whl (58 kB)
+Collecting chardet<3.1.0,>=3.0.2
+  Using cached chardet-3.0.4-py2.py3-none-any.whl (133 kB)
+Collecting docutils
+  Using cached docutils-0.21.2-py3-none-any.whl (587 kB)
+Collecting soupsieve>1.2
+  Using cached soupsieve-2.6-py3-none-any.whl (36 kB)
+Collecting typing-extensions>=4.0.0
+  Using cached typing_extensions-4.13.1-py3-none-any.whl (45 kB)
+Collecting Werkzeug>=3.1
+  Using cached werkzeug-3.1.3-py3-none-any.whl (224 kB)
+Collecting importlib-metadata>=3.6
+  Using cached importlib_metadata-8.6.1-py3-none-any.whl (26 kB)
+Collecting blinker>=1.9
+  Using cached blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Collecting itsdangerous>=2.2
+  Using cached itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Collecting click>=8.1.3
+  Using cached click-8.1.8-py3-none-any.whl (98 kB)
+Collecting MarkupSafe>=2.0
+  Using cached MarkupSafe-3.0.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)
+Collecting zope.interface
+  Using cached zope.interface-7.2-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (253 kB)
+Collecting zope.event
+  Using cached zope.event-5.0-py3-none-any.whl (6.8 kB)
+Collecting greenlet>=3.1.1
+  Using cached greenlet-3.1.1-cp39-cp39-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (597 kB)
+Collecting six>=1.9
+  Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Collecting webencodings
+  Using cached webencodings-0.5.1-py2.py3-none-any.whl (11 kB)
+Collecting zipp>=3.20
+  Using cached zipp-3.21.0-py3-none-any.whl (9.6 kB)
+Installing collected packages: webencodings, selenium, robotframework, pytz, passlib, lockfile, chardet, zope.interface, zope.event, zipp, urllib3, Unidecode, typing-extensions, soupsieve, six, robotframework-seleniumlibrary, robotframework-archivelibrary, psycopg2-binary, Pillow, openmairie.robotframework, MarkupSafe, Logbook, itsdangerous, idna, greenlet, docutils, click, certifi, blinker, Werkzeug, robotframework-selenium2library, requests, python-daemon, jinja2, importlib-metadata, html5lib, gevent, beautifulsoup4, robotframework-selenium2screenshots, robotframework-requests, openmairie.devtools, Flask, maildump
+  DEPRECATION: robotframework is being installed using the legacy 'setup.py install' method, because it does not have a 'pyproject.toml' and the 'wheel' package is not installed. pip 23.1 will enforce this behaviour change. A possible replacement is to enable the '--use-pep517' option. Discussion can be found at https://github.com/pypa/pip/issues/8559
+  Running setup.py install for robotframework: started
+  Running setup.py install for robotframework: finished with status 'done'
+  DEPRECATION: robotframework-archivelibrary is being installed using the legacy 'setup.py install' method, because it does not have a 'pyproject.toml' and the 'wheel' package is not installed. pip 23.1 will enforce this behaviour change. A possible replacement is to enable the '--use-pep517' option. Discussion can be found at https://github.com/pypa/pip/issues/8559
+  Running setup.py install for robotframework-archivelibrary: started
+  Running setup.py install for robotframework-archivelibrary: finished with status 'done'
+  DEPRECATION: openmairie.robotframework is being installed using the legacy 'setup.py install' method, because it does not have a 'pyproject.toml' and the 'wheel' package is not installed. pip 23.1 will enforce this behaviour change. A possible replacement is to enable the '--use-pep517' option. Discussion can be found at https://github.com/pypa/pip/issues/8559
+  Running setup.py install for openmairie.robotframework: started
+  Running setup.py install for openmairie.robotframework: finished with status 'done'
+  DEPRECATION: robotframework-requests is being installed using the legacy 'setup.py install' method, because it does not have a 'pyproject.toml' and the 'wheel' package is not installed. pip 23.1 will enforce this behaviour change. A possible replacement is to enable the '--use-pep517' option. Discussion can be found at https://github.com/pypa/pip/issues/8559
+  Running setup.py install for robotframework-requests: started
+  Running setup.py install for robotframework-requests: finished with status 'done'
+  DEPRECATION: openmairie.devtools is being installed using the legacy 'setup.py install' method, because it does not have a 'pyproject.toml' and the 'wheel' package is not installed. pip 23.1 will enforce this behaviour change. A possible replacement is to enable the '--use-pep517' option. Discussion can be found at https://github.com/pypa/pip/issues/8559
+  Running setup.py install for openmairie.devtools: started
+  Running setup.py install for openmairie.devtools: finished with status 'done'
+Successfully installed Flask-3.1.0 Logbook-1.8.1 MarkupSafe-3.0.2 Pillow-9.1.0 Unidecode-1.2.0 Werkzeug-3.1.3 beautifulsoup4-4.13.3 blinker-1.9.0 certifi-2025.1.31 chardet-3.0.4 click-8.1.8 docutils-0.21.2 gevent-24.11.1 greenlet-3.1.1 html5lib-1.1 idna-2.8 importlib-metadata-8.6.1 itsdangerous-2.2.0 jinja2-3.1.6 lockfile-0.12.2 maildump-1.0 openmairie.devtools-1.1.0 openmairie.robotframework-4.11.10001 passlib-1.7.4 psycopg2-binary-2.9.3 python-daemon-2.2.4 pytz-2025.2 requests-2.22.0 robotframework-3.0.4 robotframework-archivelibrary-0.4.0 robotframework-requests-0.5.0 robotframework-selenium2library-3.0.0 robotframework-selenium2screenshots-0.8.1 robotframework-seleniumlibrary-3.1.1 selenium-2.53.6 six-1.17.0 soupsieve-2.6 typing-extensions-4.13.1 urllib3-1.25.11 webencodings-0.5.1 zipp-3.21.0 zope.event-5.0 zope.interface-7.2
+
+[notice] A new release of pip is available: 23.0.1 -> 25.0.1
+[notice] To update, run: pip install --upgrade pip
++ cd tests
++ xvfb-run -a --server-args=-screen 0 1680x1050x24 om-tests -c runall --exclude
+psql:install.sql:30: NOTICE:  le schéma « openads » n'existe pas, poursuite du traitement
+PHPUnit 9.6.22 by Sebastian Bergmann and contributors.
+
+. = GeneralTest.01_utils_mois_date
+. = GeneralTest.02_TNR_selection_du_logo_dans_les_editions
+. = GeneralTest.03_instruction_formater_modele
+. = GeneralTest.05_TNR_om_requete_dossier
+. = GeneralTest.06_TNR_dossier_message
+. = GeneralTest.07_TNR_suivi_notification
+. = GeneralTest.08_taxe_amenagement_compute_ta
+. = GeneralTest.09_taxe_amenagement_compute_rap
+. = ImportSpecificTest.check_required
+. = ImportSpecificTest.check_type
+. = ImportSpecificTest.get_foreign_key_id
+. = ImportSpecificTest.explode_address
+. = ImportSpecificTest.set_linked_value
+. = RESTTest.testMaintenanceConsultation
+. = RESTTest.testMaintenanceInstruction
+. = RESTTest.maintenance_import_without_option_activated
+. = RESTTest.maintenance_purge_without_option_activated
+. = RESTTest.activate_option_digitalization_folder
+. = RESTTest.tnr_run_import_out_of_memory
+. = RESTTest.testMaintenanceImport
+. = RESTTest.testMaintenancePurge
+. = RESTTest.desactivate_option_digitalization_folder
+. = DigitalizedDocumentTest.testListFiles
+. = DigitalizedDocumentTest.testExtractMetadataFromFilename
+. = DigitalizedDocumentTest.testExtractMetadataToFilestorage
+. = DigitalizedDocumentTest.testCreateFileTemporary
+. = DigitalizedDocumentTest.testCreateDocumentNumerise
+. = DigitalizedDocumentTest.testMoveDocumentNumerise
+. = DigitalizedDocumentTest.testPurgeFiles
+. = DigitalizedDocumentTest.run_import
+. = DigitalizedDocumentTest.run_purge
+. = bibleTest.testGetBible with data set #0
+. = bibleTest.testGetBible with data set #1
+. = bibleTest.testGetBible with data set #2
+. = bibleTest.testGetBible with data set #3
+.                              36 / 36 (100%) = bibleTest.testSetPrechargeComplement
+
+
+Time: 00:45.375, Memory: 50,00 MB
+
+OK (36 tests, 170 assertions)
+psql:install.sql:30: NOTICE:  le schéma « openads » n'existe pas, poursuite du traitement
+[ ERROR ] Error in file '/home/jenkins/tmp/workspace/openADS__P2_10597_EVO_vitesse_flux_sortants/tests/modules_example/helloworld/611_module_example_helloworld.robot': Non-existing setting 'Tags'.
+==============================================================================
+Tests                                                                         
+==============================================================================
+Tests.000 No Data :: Test suite no data                                       
+==============================================================================
+Génération complète :: Le 'Framework' de l'application permet de g... | PASS |
+------------------------------------------------------------------------------
+TNR Erreur de base de données sur listing vide de DI :: Teste sur ... | PASS |
+------------------------------------------------------------------------------
+Ouverture des fieldsets :: Teste l'ouverture d'un fieldset de form... | PASS |
+------------------------------------------------------------------------------
+SETUP - Configuration du timeout sur la pagination                    | PASS |
+------------------------------------------------------------------------------
+FEAT - Pagination - Bouton de calcul du total d'element dans un TAB   | PASS |
+------------------------------------------------------------------------------
+FEAT - Pagination - Calcul et affichage du total d'element dans un... | PASS |
+------------------------------------------------------------------------------
+TEARDOWN - Suppression du timeout sur la pagination                   | PASS |
+------------------------------------------------------------------------------
+Tests.000 No Data :: Test suite no data                               | PASS |
+7 critical tests, 7 passed, 0 failed
+7 tests total, 7 passed, 0 failed
+==============================================================================
+Tests.010 Multicollectivite :: Test des fonctionnalités introduites par le ...
+==============================================================================
+Service :: L'objet de ce 'Test Case' est de vérifier le filtre des    | PASS |
+------------------------------------------------------------------------------
+Affectation :: L'objet de ce 'Test Case' est de vérifier l'affecta... | PASS |
+------------------------------------------------------------------------------
+Signataire :: L'objet de ce 'Test Case' est de vérifier le filtre des | PASS |
+------------------------------------------------------------------------------
+Direction :: L'objet de ce 'Test Case' est de vérifier le filtre des  | PASS |
+------------------------------------------------------------------------------
+Widget :: L'objet de ce 'Test Case' est de vérifier le filtre des     | PASS |
+------------------------------------------------------------------------------
+Consultation via URL :: L'objet de ce 'Test Case' est de vérifier ... | PASS |
+------------------------------------------------------------------------------
+TNR Filtre incorrect sur les services à consulter :: Lorsqu'on éta... | PASS |
+------------------------------------------------------------------------------
+TNR Vérification des variables de remplacement en multi-collectivi... | PASS |
+------------------------------------------------------------------------------
+Option de renommage du libellé "Collectivité" pour "Service" dans ... | PASS |
+------------------------------------------------------------------------------
+Supprimer les paramètres :: RAZ des paramètres du test                | PASS |
+------------------------------------------------------------------------------
+Tests.010 Multicollectivite :: Test des fonctionnalités introduite... | PASS |
+10 critical tests, 10 passed, 0 failed
+10 tests total, 10 passed, 0 failed
+==============================================================================
+Tests.011 02 Parametrage Modele Rapport Instruction :: Test des fonctionnal...
+==============================================================================
+Ajout de modèles de rapport d'instruction :: Avec un profil Admini... | PASS |
+------------------------------------------------------------------------------
+Utilisation de modèle à l'ajout d'un rapport d'instruction :: Avec... | PASS |
+------------------------------------------------------------------------------
+Utilisation de modèle à la modification d'un rapport d'instruction... | PASS |
+------------------------------------------------------------------------------
+Tests.011 02 Parametrage Modele Rapport Instruction :: Test des fo... | PASS |
+3 critical tests, 3 passed, 0 failed
+3 tests total, 3 passed, 0 failed
+==============================================================================
+Tests.011 Parametrage Instructeur :: Test des fonctionnalités liées au para...
+==============================================================================
+Filtrage de la liste des instructeurs selon la collectivite d'appa... | PASS |
+------------------------------------------------------------------------------
+Tests.011 Parametrage Instructeur :: Test des fonctionnalités liée... | PASS |
+1 critical test, 1 passed, 0 failed
+1 test total, 1 passed, 0 failed
+==============================================================================
+Tests.012 Utilisateurs Lies :: Test des fonctionnalités concernant utilisat...
+==============================================================================
+Constitution du jeu de données :: Permet de préparer les données p... | PASS |
+------------------------------------------------------------------------------
+Ajout d'un utilisateur lié :: En tant qu'administrateur technique ... | PASS |
+------------------------------------------------------------------------------
+Ajout d'un utilisateur avec espace en début et fin dans son login ... | PASS |
+------------------------------------------------------------------------------
+Consultation d'un utilisateur lié :: Un fois ajouté je peux modifi... | PASS |
+------------------------------------------------------------------------------
+Modification d'un utilisateur lié :: La modification est limitée a... | PASS |
+------------------------------------------------------------------------------
+Vérification du changement d'utilisateur :: En tant qu'utilisateur... | PASS |
+------------------------------------------------------------------------------
+Listing et recherche avancée concernant les utilisateurs liés :: D... | PASS |
+------------------------------------------------------------------------------
+Suppression d'un utilisateur lié :: En tant qu'administrateur tech... | PASS |
+------------------------------------------------------------------------------
+Tests.012 Utilisateurs Lies :: Test des fonctionnalités concernant... | PASS |
+8 critical tests, 8 passed, 0 failed
+8 tests total, 8 passed, 0 failed
+==============================================================================
+Tests.020 Administration :: Menu Administration                               
+==============================================================================
+Vérification du click sur le Logo :: On teste le click sur le logo... | PASS |
+------------------------------------------------------------------------------
+Apparition du lien d'authentification openid :: On teste l'apparit... | PASS |
+------------------------------------------------------------------------------
+Synchronisation des utilisateurs avec un annuaire LDAP :: On teste... | FAIL |
+Page should have contained text 'Il y a 4 utilisateur(s) présent(s) dans l'annuaire et non présent(s) dans la base => 4 ajout(s)' but did not.
+------------------------------------------------------------------------------
+Reset Params - Synchronisation des utilisateurs avec un annuaire LDAP | FAIL |
+Keyword 'Element Should Contain' failed after retrying for 20 seconds. The last error was: Element 'css=.tab-listing-container' should have contained text 'Albert Einstein' but its text was 'Ajouter
+utilisateur
+  nom
+  email
+  login
+  type
+  profil
+  collectivité
+  utilisateurs liés
+Consulter 1 Administrateur  support@atreal.fr admin DB ADMINISTRATEUR TECHNIQUE ET FONCTIONNEL agglo Non
+Consulter 19 Administrateur fonctionnel  support@atreal.fr adminfonct DB ADMINISTRATEUR FONCTIONNEL MARSEILLE Non
+Consulter 20 Administrateur général  support@atreal.fr admingen DB ADMINISTRATEUR GENERAL agglo Non
+Consulter 27 Administrateur gen Marseile  support@atreal.fr admingenmars DB ADMINISTRATEUR GENERAL MARSEILLE Non
+Consulter 2 Anonyme  support@atreal.fr anony DB PROFIL NON CONFIGURÉ MARSEILLE Non
+Consulter 28 Assistante  support@atreal.fr assist DB ASSISTANTE MARSEILLE Non
+Consulter 9 Cellule suivi  support@atreal.fr suivi DB CELLULE SUIVI MARSEILLE Non
+Consulter 16 Chef de service  support@atreal.fr chef db CHEF DE SERVICE MARSEILLE Non
+Consulter 29 Chef de service contentieux  support@atreal.fr chefctx DB CHEF DE SERVICE CONTENTIEUX MARSEILLE Non
+Consulter 40 Cressac Laurent  support@atreal.fr instrmart db INSTRUCTEUR Martigues Non
+Consulter 33 Direction consultation  support@atreal.fr dirconsu DB DIRECTION CONSULTATION MARSEILLE Non
+Consulter 35 Direction infraction  support@atreal.fr dirinf DB DIRECTION INFRACTION MARSEILLE Non
+Consulter 34 Direction recours  support@atreal.fr dirrec DB DIRECTION RECOURS MARSEILLE Non
+Consulter 15 Divisionnaire  support@atreal.fr divi db DIVISIONNAIRE MARSEILLE Non
+Consulter 41 DUPONT Jean-Paul  support@atreal.fr instrdupmart db INSTRUCTEUR Nice Non'.
+------------------------------------------------------------------------------
+Affichage des champs de fusion :: Permet de tester la liste des ch... | PASS |
+------------------------------------------------------------------------------
+TNR Listing des utilisateurs sans le mot de passe :: Dans le listi... | PASS |
+------------------------------------------------------------------------------
+TNR Vérifier l'orthographe des libellés des types de dossier d'ins... | PASS |
+------------------------------------------------------------------------------
+Paramétrage d'un logo :: Le but de ce test est de vérifier si la c... | PASS |
+------------------------------------------------------------------------------
+Paramétrage d'un instructeur appartenant à une division :: Vérific... | PASS |
+------------------------------------------------------------------------------
+Surcharger le nombre d'éléments dans le listing d'om_parametre ave... | PASS |
+------------------------------------------------------------------------------
+Vérification du bon fonctionnement de la recherche avancée Utilisa... | FAIL |
+Element with locator 'css=#tab-om_utilisateur table.tab-tab tbody td.col-1' not found.
+------------------------------------------------------------------------------
+Vérification du bon fonctionnement de la recherche avancée Affecta... | PASS |
+------------------------------------------------------------------------------
+Afficher un logo spécifique dans l'entête de l'application :: Véri... | PASS |
+------------------------------------------------------------------------------
+Vérification des attributions hiérarchiques de l'utilisateur coura... | PASS |
+------------------------------------------------------------------------------
+Vérification du bon fonctionnement du paramètre affichage_di_listi... | PASS |
+------------------------------------------------------------------------------
+Reset params - Vérification du bon fonctionnement du paramètre aff... | PASS |
+------------------------------------------------------------------------------
+Tests.020 Administration :: Menu Administration                       | FAIL |
+16 critical tests, 13 passed, 3 failed
+16 tests total, 13 passed, 3 failed
+==============================================================================
+Tests.021 Parametrage Type Demande :: Test le fonctionnement des écrans du ...
+==============================================================================
+Ajout d'un nouveau type de demande :: Avec un profil administrateu... | PASS |
+------------------------------------------------------------------------------
+Suppression d'un type de demande n'ayant pas de dossier :: Avec un... | PASS |
+------------------------------------------------------------------------------
+Tests.021 Parametrage Type Demande :: Test le fonctionnement des é... | PASS |
+2 critical tests, 2 passed, 0 failed
+2 tests total, 2 passed, 0 failed
+==============================================================================
+Tests.022 parametrage type DI :: Test le fonctionnement des écrans du menu ...
+==============================================================================
+Affichage dynamique des champs sur le formulaire d'ajout d'un type... | PASS |
+------------------------------------------------------------------------------
+Affichage dynamique des champs sur le formulaire de modification d... | PASS |
+------------------------------------------------------------------------------
+Affichage des champs sur le formulaire de consultation d'un type d... | PASS |
+------------------------------------------------------------------------------
+Affichage des champs sur le formulaire de suppression d'un type de... | PASS |
+------------------------------------------------------------------------------
+Tests.022 parametrage type DI :: Test le fonctionnement des écrans... | PASS |
+4 critical tests, 4 passed, 0 failed
+4 tests total, 4 passed, 0 failed
+==============================================================================
+Tests.023 010 Parametrage Evenement :: Test le fonctionnement des écrans du...
+==============================================================================
+Chemin d'accès au formulaire de l'événément :: Test du chemins d'a... | PASS |
+------------------------------------------------------------------------------
+Affichage dynamique des champs sur le formulaire d'ajout d'un évén... | PASS |
+------------------------------------------------------------------------------
+Affichage dynamique des champs sur le formulaire de modification d... | PASS |
+------------------------------------------------------------------------------
+Affichage des champs sur le formulaire de consultation d'un événem... | PASS |
+------------------------------------------------------------------------------
+Affichage des champs sur le formulaire de suppression d'un événeme... | PASS |
+------------------------------------------------------------------------------
+Vérification de la validation des numériques et dates dans les reg... | PASS |
+------------------------------------------------------------------------------
+Vérification des champs et gestion d'un évènement (document_type) ... | PASS |
+------------------------------------------------------------------------------
+Tests.023 010 Parametrage Evenement :: Test le fonctionnement des ... | PASS |
+7 critical tests, 7 passed, 0 failed
+7 tests total, 7 passed, 0 failed
+==============================================================================
+Tests.023 020 Parametrage Action :: Test le fonctionnement des écrans du me...
+==============================================================================
+Vérification de l'unicité dans les regles :: Teste l'interdiction ... | PASS |
+------------------------------------------------------------------------------
+Vérification de la validation des null dans les regles :: Test la ... 
