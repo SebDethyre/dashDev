@@ -74,7 +74,58 @@ dashDev is built around:
 * Immediate access to the most common development actions
 
 It is not just a launcher, but a **developer control center**.
+ 
+## Installation & Requirements
+### Requirements
 
+####* Linux-based operating system (desktop environment required)
+* Python 3.9 or newer
+* Subversion (SVN) client
+* Robot Framework
+* Access to a Jenkins instance (API credentials if required)
+* Git (optional, depending on project context)
+
+### Optional / Integrated Tools
+
+* Adminer
+* Poedit
+* External branch merge tools
+* Terminal emulator compatible with the system
+
+Some features depend on the availability and configuration of external tools and services (SVN repositories, Jenkins jobs, Robot Framework test suites).
+
+## Installation
+
+* Clone the repository
+* Install Python dependencies:
+`pip install -r requirements.txt
+
+### Configure your environment:
+
+* Define application paths
+* Configure SVN repositories
+* Set Jenkins endpoints and credentials
+* Configure Robot Framework test locations
+
+## Launch dashDev:
+`python dashDev.py`
+
+---
+
+## 📄 License
+
+To be defined.
+
+## 👤 Author
+
+Project developed as an advanced tooling initiative around Robot Framework by Sébastien Dethyre.
+
+## 🤝 Contributions
+
+Contributions, suggestions, and feedback are welcome.  
+Feel free to open an issue or submit a pull request.
+---
+<br>
 ---
 
 ## 🇫🇷 Français
@@ -148,6 +199,60 @@ dashDev repose sur :
 
 Ce n’est pas seulement un lanceur, mais un véritable **centre de contrôle pour développeur**.
 
+
+## Installation et prérequis
+### Prérequis
+
+* Système Linux (environnement graphique requis)
+* Python 3.9 ou supérieur
+* Client Subversion (SVN)
+* Robot Framework
+* Accès à une instance Jenkins (identifiants API si nécessaire)
+* Git (optionnel, selon le contexte projet)
+ 
+### Outils optionnels / intégrés
+
+* Adminer
+* Poedit
+* Outils externes de merge de branches
+* Émulateur de terminal compatible avec le système
+
+Certaines fonctionnalités dépendent de la disponibilité et de la configuration des outils et services externes (dépôts SVN, jobs Jenkins, suites Robot Framework).
+
+## Installation
+
+* Cloner le dépôt
+* Installer les dépendances Python :
+`pip install -r requirements.txt`
+
+### Configurer l’environnement :
+
+* Définir les chemins des applications
+* Configurer les dépôts SVN
+* Renseigner les endpoints et identifiants Jenkins
+* Configurer les emplacements des tests Robot Framework
+
+## Lancer dashDev :
+
+`python dashDev.py`
+
 ---
+
+## 📄 Licence
+
+À définir.
+
+---
+
+## 👤 Auteur
+
+Projet développé dans un objectif d’outillage avancé autour de Robot Framework par Sébastien Dethyre.
+
+---
+
+## 🤝 Contributions
+
+Les contributions, suggestions et retours sont les bienvenus.  
+N’hésitez pas à ouvrir une issue ou une pull request.
 
 *dashDev – One interface to rule your daily development workflow.*
