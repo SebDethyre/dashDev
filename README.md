@@ -78,7 +78,7 @@ It is not just a launcher, but a **developer control center**.
 ## Installation & Requirements
 ### Requirements
 
-####* Linux-based operating system (desktop environment required)
+* Linux-based operating system (desktop environment required)
 * Python 3.9 or newer
 * Subversion (SVN) client
 * Robot Framework
