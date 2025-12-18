@@ -118,7 +118,7 @@ To be defined.
 
 ## 👤 Author
 
-Project developed as an advanced tooling initiative around Robot Framework by Sébastien Dethyre.
+Project developed by Sébastien Dethyre.
 
 ## 🤝 Contributions
 
@@ -249,7 +249,7 @@ Certaines fonctionnalités dépendent de la disponibilité et de la configuratio
 
 ## 👤 Auteur
 
-Projet développé dans un objectif d’outillage avancé autour de Robot Framework par Sébastien Dethyre.
+Projet développé par Sébastien Dethyre.
 
 ---
 
