@@ -124,6 +124,7 @@ Project developed as an advanced tooling initiative around Robot Framework by SÃ
 
 Contributions, suggestions, and feedback are welcome.  
 Feel free to open an issue or submit a pull request.
+
 ---
 <br>
 ---
